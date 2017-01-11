@@ -18,7 +18,7 @@ type Props = {
 	closeTabButtonPosition: CloseTabButtonPosition,
 	onCloseTabButtonClick?: (e: Object) => void,
 	onClick?: (e: Object) => void,
-	onMouseDown?: (e) => void,
+	onMouseDown?: (e: Object) => void,
 	onDragStart?: (e: Object, data: Object) => void | false,
 	onDrag?: (e: Object, data: Object) => void | false,
 	onDragStop?: (e: Object, data: Object) => void | false,
@@ -82,7 +82,7 @@ export default class Tab extends Component {
 		}
 	}
 
-	onMouseDown(e) {
+	onMouseDown(e: Object) {
 		if (e) {
 			// e.stopPropagation()
 			// e.preventDefault()

@@ -1,5 +1,2 @@
-import MacOSTabs from './src/macos_tabs'
-import TabBody from './src/tab_body'
-
-export default MacOSTabs
-export TabBody
+module.exports = require('./src/macos_tabs')
+module.exports.TabBody = require('./src/tab_body')
