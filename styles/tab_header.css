@@ -1,0 +1,19 @@
+.macOSTabs {
+	height: 100%;
+	width: 100%;
+	background-color: grey;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	position: relative;
+}
+
+.macOSTabsInner {
+	overflow-x: scroll;
+}
+
+.macOSTabsInner::-webkit-scrollbar { 
+	height: 4px;
+	width: 0px;
+	display: none;
+}

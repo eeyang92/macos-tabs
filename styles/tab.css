@@ -1,0 +1,54 @@
+.macOSTabNormal {
+	border: 1px solid #929292;
+	height: 100%;
+	background-color: #BDBABD;
+	list-style-type: none;
+	flex: 1 1 0%;
+	text-align: center;
+	min-width: 103px;
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	font-size: 12px;
+	margin-right: -1px;
+}
+
+.macOSTabNormal:hover {
+	background-color: #B6B4B6;
+	border-color: #949494;
+}
+
+.macOSTabActive {
+	background-color: #D2CFD2;
+	border-color: #AEAEAE;
+	z-index: 1000;
+}
+
+.macOSTabActive:hover {
+	background-color: #D2CFD2;
+	border-color: #AEAEAE;
+}
+
+.macOSCloseTabButton {
+	height: 16px;
+	width: 16px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	vertical-align: top;
+	z-index: 100;
+	position: absolute;
+	top: 3px;
+	left: 5px;
+	color: #666366;
+	opacity: 0;
+	font-size: 14px;
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.macOSCloseTabButton:hover {
+	border-radius: 2px;
+	background: rgba(0, 0, 0, 0.08);
+}
+
+.macOSTabNormal:hover .macOSCloseTabButton {
+	opacity: 1;
+}

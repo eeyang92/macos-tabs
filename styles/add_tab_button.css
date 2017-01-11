@@ -1,0 +1,12 @@
+.macOSAddTabButton {
+	height: 100%;
+	width: 24px;
+	background-color: #C1C0C1;
+	margin: 0;
+	padding: 0;
+	float: right;
+	border: 1px solid #939393;
+	text-align: center;
+	list-style-type: none;
+	z-index: 100;
+}

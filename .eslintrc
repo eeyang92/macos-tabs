@@ -1,0 +1,55 @@
+{
+	"parser": "babel-eslint",
+	"extends": "airbnb",
+	"env": {
+		"browser": true,
+		"mocha": true,
+		"node": true
+	},
+	"rules": {
+		"arrow-parens": ["off"],
+		"consistent-return": "off",
+		"comma-dangle": "off",
+		"generator-star-spacing": "off",
+		"import/no-unresolved": ["error", { "ignore": ["electron"] }],
+		"import/no-extraneous-dependencies": "off",
+		"no-use-before-define": "off",
+		"promise/param-names": 2,
+		"promise/always-return": 2,
+		"promise/catch-or-return": 2,
+		"promise/no-native": 0,
+		"react/jsx-no-bind": "off",
+		"react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+		"react/jsx-curly-spacing": "off",
+		"jsx-quotes": "off",
+		"react/prefer-stateless-function": "off",
+		"flowtype-errors/show-errors": 2,
+		"indent": ["error", "tab"],
+		"no-tabs": "off",
+		"semi": "off",
+		"react/jsx-indent": "off",
+		"no-restricted-syntax": "off",
+		"guard-for-in": "off",
+		"react/sort-comp": "off",
+		"react/jsx-indent-props": "off",
+		"template-curly-spacing": "off",
+		"no-plusplus": "off",
+		"no-underscore-dangle": "off",
+		"jsx-a11y/no-static-element-interactions": "off",
+		"arrow-body-style": "off"
+	},
+	"plugins": [
+		"flowtype",
+		"flowtype-errors",
+		"import",
+		"promise",
+		"react"
+	],
+	"settings": {
+		"import/resolver": {
+			"webpack": {
+				"config": "webpack.config.eslint.js"
+			}
+		}
+	}
+}
