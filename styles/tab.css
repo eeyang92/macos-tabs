@@ -1,14 +1,23 @@
 .macOSTabNormal {
 	border: 1px solid #929292;
-	height: 100%;
+	height: 24px;
+	color: #626569;
 	background-color: #BDBABD;
 	list-style-type: none;
 	flex: 1 1 0%;
 	text-align: center;
 	min-width: 103px;
 	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-	font-size: 12px;
+	font-size: 11px;
 	margin-right: -1px;
+	line-height: 22px;
+	vertical-align: middle;
+	box-sizing: border-box; 
+	cursor: default;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .macOSTabNormal:hover {
@@ -17,6 +26,7 @@
 }
 
 .macOSTabActive {
+	color: #444444;
 	background-color: #D2CFD2;
 	border-color: #AEAEAE;
 	z-index: 1000;

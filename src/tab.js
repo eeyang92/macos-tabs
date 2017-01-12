@@ -133,7 +133,7 @@ export default class Tab extends Component {
 					{ this.props.closeTabButtonPosition === 'start' &&
 						<CloseTabButton onClick={ this.onCloseTabButtonClick.bind(this) } />
 					}
-					<div style={{ height: '100%', paddingTop: '1px' }}>
+					<div style={{ height: '100%' }}>
 						{ this.props.label }
 					</div>
 					{ this.props.closeTabButtonPosition === 'end' &&

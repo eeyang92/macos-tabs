@@ -9,23 +9,25 @@ type ID = number | string
 type Tabs = Array<Object>
 
 type Props = {
-	addTabPosition: 'none' | 'start' | 'end',
-	activeTabIndex?: number,
-	tabs: Tabs,
-	defaultContent: Object,
-	showHeader: boolean,
-	headerHeight: number | string,
 	onSetActiveTab?: (index: number) => void,
 	onAddTabButtonClick?: (e: Object, tabs: Tabs) => void,
 	onCloseTabButtonClick?: (e: Object, tabs: Tabs, closedTabIndex: number) => void,
 	onDragStop?: (e: Object, data: Object, tabs: Tabs, activeTabIndex: number) => void,
-	onDragOut?: (e: Object, data: Object, tabs: Tabs, outTabIndex: number) => void,
-	dragOutDistance?: number,
 	onTabClick?: (e: Object, index: number) => void,
+	addTabPosition: 'none' | 'start' | 'end',
+	activeTabIndex: number,
+	tabs: Tabs,
+	defaultContent: Object,
+	showHeader: boolean,
+	headerHeight: number | string,
+	autoActiveTab: boolean,
+	customBodyElementId?: string,
+
+	// Experimental
 	onMouseEnter?: () => void,
 	onMouseLeave?: () => void,
-	autoActiveTab: boolean,
-	customBodyElementId?: string
+	onDragOut?: (e: Object, data: Object, tabs: Tabs, outTabIndex: number) => void,
+	dragOutDistance: number
 }
 
 type State = {

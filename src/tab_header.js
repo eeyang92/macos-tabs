@@ -2,7 +2,8 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import $ from 'jquery'
-import _ from 'lodash'
+import isEqual from 'lodash.isequal'
+import throttle from 'lodash.throttle'
 
 import Tab from './tab'
 import AddTabButton from './add_tab_button'
@@ -62,15 +63,15 @@ export default class TabHeader extends Component {
 		this.tabRefs = {}
 		this.virtualTabs = null
 
-		this.onScroll = _.throttle(this.onScroll, 4, { leading: true }).bind(this)
+		this.onScroll = throttle(this.onScroll, 4, { leading: true }).bind(this)
 	}
 
 	componentDidUpdate(prevProps: Props) {
-		if (!_.isEqual(prevProps.tabs, this.props.tabs)) {
+		if (!isEqual(prevProps.tabs, this.props.tabs)) {
 			this.resetTabPositions()
 		}
 
-		if (!_.isEqual(prevProps.activeTabIndex, this.props.activeTabIndex)) {
+		if (!isEqual(prevProps.activeTabIndex, this.props.activeTabIndex)) {
 			this.focusTab(this.props.activeTabIndex, 300)
 		}
 	}

@@ -32,7 +32,7 @@ export default class CloseTabButton extends Component {
 				onClick={ this.onClick.bind(this) }
 				onMouseDown={ this.onMouseDown.bind(this) }
 			>
-				<div style={{ marginTop: '-4px', marginLeft: '-1px' }}>
+				<div style={{ marginTop: '-5px', marginLeft: '-1px' }}>
 					x
 				</div>
 			</div>
