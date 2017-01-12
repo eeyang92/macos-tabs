@@ -6,13 +6,13 @@ This package is a work in progress. More examples and configuration options will
 
 ## Installation
 
-```
+```bash
 npm install --save macos-tabs
 ```
 
 or
 
-```
+```bash
 yarn add macos-tabs
 ```
 
@@ -22,7 +22,7 @@ yarn add macos-tabs
 
 ### MacOSTabs
 
-```
+```javascript
 type ID = number | string
 type Tabs = Array<Object>
 
@@ -60,7 +60,7 @@ static defaultProps = {
 
 ### TabBody
 
-```
+```javascript
 type Props = {
 	label?: string | number,
 	children?: Object,
@@ -75,7 +75,7 @@ static defaultProps = {
 
 ## Minimal Example
 
-```
+```javascript
 // @flow
 import React, { Component } from 'react'
 import MacOSTabs, { TabBody } from 'macos-tabs'
