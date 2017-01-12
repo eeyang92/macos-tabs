@@ -12,7 +12,8 @@
     "url": "git+https://github.com/eeyang92/macos-tabs.git"
   },
   "scripts": {
-    "build": "NODE_ENV=production ./node_modules/.bin/webpack --progress --profile --colors",
+    "size": "./node_modules/.bin/webpack --json | ./node_modules/.bin/webpack-bundle-size-analyzer",
+    "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.prod.config.js -p --progress --profile --colors",
     "dev": "NODE_ENV=development ./node_modules/.bin/webpack --progress --profile --colors"
   },
   "license": "MIT",
@@ -26,6 +27,7 @@
     "babel-plugin-webpack-loaders": "^0.8.0",
     "babel-polyfill": "^6.20.0",
     "babel-preset-env": "^1.1.4",
+    "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-react-optimize": "^1.0.1",
@@ -53,12 +55,14 @@
     "html-webpack-plugin": "^2.24.1",
     "json-loader": "^0.5.4",
     "mocha": "^3.2.0",
+    "pkgfiles": "^2.3.2",
     "react-addons-test-utils": "^15.4.1",
     "spectron": "^3.4.0",
     "style-loader": "^0.13.1",
     "tcomb": "^3.2.15",
     "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
+    "webpack-bundle-size-analyzer": "^2.4.2",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.13.2",
     "webpack-merge": "^2.0.0",

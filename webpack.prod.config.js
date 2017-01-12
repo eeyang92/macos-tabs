@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 
 module.exports = {
-	devtool: 'inline-source-map',
+	devtool: 'cheap-module-source-map',
 	entry: './index.js',
 	output: {
 		path: 'dist',
@@ -35,5 +35,12 @@ module.exports = {
 				NODE_ENV: JSON.stringify(process.env.NODE_ENV)
 			}
 		}),
+		new webpack.optimize.DedupePlugin(),
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				warnings: false
+			}
+		}),
+		new webpack.optimize.AggressiveMergingPlugin()
 	]
 }
