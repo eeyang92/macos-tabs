@@ -1,6 +1,6 @@
 {
   "name": "macos-tabs",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "macOS-like Tabs for React (designed specifically for Electron)",
   "main": "dist/macos_tabs.lib.js",
   "author": {
@@ -15,7 +15,7 @@
     "flow-typed": "./node_modules/.bin/flow-typed",
     "size": "./node_modules/.bin/webpack --json | ./node_modules/.bin/webpack-bundle-size-analyzer",
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.prod.config.js -p --progress --profile --colors",
-    "dev": "NODE_ENV=development ./node_modules/.bin/webpack --progress --profile --colors"
+    "dev": "NODE_ENV=development ./node_modules/.bin/webpack --config ./webpack.config.js --progress --profile --colors"
   },
   "license": "MIT",
   "devDependencies": {

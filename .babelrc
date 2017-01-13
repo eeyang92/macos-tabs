@@ -12,7 +12,7 @@
 			"plugins": ["babel-plugin-dev-expression"]
 		},
 		"development": {
-			"plugins": ["tcomb"] //,
+			// "plugins": ["tcomb"] //,
 			// "presets": ["react-hmre"]
 		}// ,
 		// "test": {

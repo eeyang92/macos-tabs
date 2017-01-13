@@ -7,26 +7,64 @@ import TabHeader from './tab_header'
 
 type ID = number | string
 type Tabs = Array<Object>
+type Event = Object
 
 type Props = {
+	// onClick event when the user clicks on a tab header
+	onAddTabButtonClick?: (e: Event) => void,
+
+	// onClick event when the user click on the close tab button on a tab header
+	onCloseTabButtonClick?: (e: Event, closedTabIndex: number) => void,
+
+	// Event when the user stops dragging a header
+	// The updated tabs contain the new ordering, you can directly update your state with
+	// these returned tabs
+	onDragStop?: (e: Event, data: Object, tabs: Tabs, activeTabIndex: number) => void,
+
+	// Event when the user clicks on a tab header
+	// The index of the clicked header is passed back
+	onTabClick?: (e: Event, index: number) => void,
+
+	// Event when the activeTabIndex is updated internally
+	// This allows you to keep track of the activeTabIndex even
+	// if you are letting MacOSTabs handle the state
 	onSetActiveTab?: (index: number) => void,
-	onAddTabButtonClick?: (e: Object, tabs: Tabs) => void,
-	onCloseTabButtonClick?: (e: Object, tabs: Tabs, closedTabIndex: number) => void,
-	onDragStop?: (e: Object, data: Object, tabs: Tabs, activeTabIndex: number) => void,
-	onTabClick?: (e: Object, index: number) => void,
+
+	// Specify the position of addTabButton
 	addTabPosition: 'none' | 'start' | 'end',
-	activeTabIndex: number,
-	tabs: Tabs,
-	defaultContent: Object,
-	showHeader: boolean,
-	headerHeight: number | string,
+
+	// Declare whether or not you want to manage the activeTabIndex
 	autoActiveTab: boolean,
+
+	// Can be used to set initial active tab index
+	// If autoActiveTab is false, then you should have methods
+	// to manage the activeTabIndex state
+	activeTabIndex: number,
+
+	// Tab content should be wrapped in a TabBody component with the correct props
+	// Tabs order can be modified programmatically by manually changing the order
+	// of the array
+	tabs: Tabs,
+
+	// Declare a div or react component to render when there are no tabs open
+	defaultContent: Object,
+
+	// Flag to show or hide tab headers
+	showHeader: boolean,
+
+	// Declare the header height in px (note: styles have not been tested with
+	// anything but the default of 24px)
+	headerHeight: number | string,
+
+	// Declare a custom element that the body should be rendered into
+	// instead of directly below the tab headers
+	// i.e. <div id="tabBody" />
 	customBodyElementId?: string,
 
-	// Experimental
+	// Experimental/Not Completed
 	onMouseEnter?: () => void,
 	onMouseLeave?: () => void,
-	onDragOut?: (e: Object, data: Object, tabs: Tabs, outTabIndex: number) => void,
+	onDragOut?: (e: Event, data: Object, outTabIndex: number) => void,
 	dragOutDistance: number
 }
 
@@ -54,30 +92,12 @@ export default class MacOSTabs extends Component {
 		super(props)
 
 		this.state = {
-			activeTabIndex: 0
+			activeTabIndex: this.props.activeTabIndex || 0
 		}
-	}
-
-	findTabIdByIndex(index: number): ID {
-		if (!this.props.tabs[index]) {
-			return -1
-		}
-
-		return this.props.tabs[index].props.tabId
-	}
-
-	findTabIndexById(id: ID): number {
-		for (let index = 0; index < this.props.tabs.length; index++) {
-			if (id === this.props.tabs[index].props.tabId) {
-				return index
-			}
-		}
-
-		return -1
 	}
 
 	getActiveTab() {
-		const activeTab = (this.props.activeTabIndex) ? this.props.activeTabIndex : this.state.activeTabIndex
+		const activeTab = (typeof this.props.activeTabIndex === 'number') ? this.props.activeTabIndex : this.state.activeTabIndex
 
 		return activeTab
 	}
@@ -98,17 +118,17 @@ export default class MacOSTabs extends Component {
 		this.setActiveTab(index)
 	}
 
-	onAddTabButtonClick(e: Object, tabs: Tabs) {
+	onAddTabButtonClick(e: Event, tabs: Tabs) {
 		if (this.props.onAddTabButtonClick) {
-			this.props.onAddTabButtonClick(e, tabs)
+			this.props.onAddTabButtonClick(e)
 		}
 
-		this.onSetActiveTab(tabs.length - 1)
+		this.setActiveTab(tabs.length - 1)
 	}
 
-	onCloseTabButtonClick(e: Object, tabs: Tabs, closedTabIndex: number) {
+	onCloseTabButtonClick(e: Event, tabs: Tabs, closedTabIndex: number) {
 		if (this.props.onCloseTabButtonClick) {
-			this.props.onCloseTabButtonClick(e, tabs, closedTabIndex)
+			this.props.onCloseTabButtonClick(e, closedTabIndex)
 		}
 
 		const activeTabIndex = this.getActiveTab()
@@ -118,13 +138,13 @@ export default class MacOSTabs extends Component {
 		}
 	}
 
-	onDragOut(e: Object, data: Object, tabs: Tabs, index: number) {
+	onDragOut(e: Event, data: Object, tabs: Tabs, index: number) {
 		if (this.props.onDragOut) {
-			this.props.onDragOut(e, data, tabs, index)
+			this.props.onDragOut(e, data, index)
 		}
 	}
 
-	onDragStop(e: Object, data: Object, tabs: Tabs, activeTabIndex: number) {
+	onDragStop(e: Event, data: Object, tabs: Tabs, activeTabIndex: number) {
 		if (this.props.onDragStop) {
 			this.props.onDragStop(e, data, tabs, activeTabIndex)
 		}
@@ -132,7 +152,7 @@ export default class MacOSTabs extends Component {
 		this.onSetActiveTab(activeTabIndex)
 	}
 
-	onTabClick(e: Object, index: number) {
+	onTabClick(e: Event, index: number) {
 		if (this.props.onTabClick) {
 			this.props.onTabClick(e, index)
 		}
@@ -152,12 +172,24 @@ export default class MacOSTabs extends Component {
 		}
 	}
 
-	renderActiveChild(index: number): Object {
+	renderActiveChild(index: number) {
 		if (index > -1 && this.props.tabs[index]) {
 			return this.props.tabs[index].props.children
 		} else if (this.props.tabs.length === 0) {
 			return this.props.defaultContent
 		}
+
+		// const toRender = []
+
+		// for (let i = 0; i < this.props.tabs.length; i++) {
+		// 	if (i !== index) {
+		// 		toRender.push(<div key={{ index }} style={{ display: 'none' }}>{ this.props.tabs[index] }</div>)
+		// 	} else {
+		// 		toRender.push(this.props.tabs[index])
+		// 	}
+		// }
+
+		// return toRender
 	}
 
 	shouldRenderHeader() {
@@ -189,6 +221,7 @@ export default class MacOSTabs extends Component {
 
 	render() {
 		const headerHeight = (this.shouldRenderHeader()) ? this.formatHeight(this.props.headerHeight) : 0
+		const activeTabIndex = this.getActiveTab()
 
 		return (
 			<div style={{ height: '100%' }}>
@@ -204,7 +237,7 @@ export default class MacOSTabs extends Component {
 							onTabClick={ this.onTabClick.bind(this) }
 							onMouseEnter={ this.onMouseEnter.bind(this) }
 							onMouseLeave={ this.onMouseLeave.bind(this) }
-							activeTabIndex={ this.getActiveTab() }
+							activeTabIndex={ activeTabIndex }
 							addTabPosition={ this.props.addTabPosition }
 							tabs={ this.props.tabs }
 						/>
