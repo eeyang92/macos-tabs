@@ -26,8 +26,7 @@ module.exports = {
 		]
 	},
 	resolve: {
-		extensions: ['', '.js', '.jsx', '.json'],
-		packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
+		extensions: ['', '.js', '.jsx', '.json']
 	},
 	plugins: [
 		new webpack.DefinePlugin({

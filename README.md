@@ -166,3 +166,117 @@ export default class Home extends Component {
 }
 ```
 
+## Controlled Active Tab Example
+
+```
+// @flow
+import React, { Component } from 'react'
+import MacOSTabs, { TabBody } from 'macos-tabs'
+
+type Tabs = Array<Object>
+type ID = number | string
+
+type Props = Object
+type State = {
+	tabs: Tabs,
+	activeTabIndex: number
+}
+
+const defaultStyles = {
+	height: '100%'
+}
+
+export default class Home extends Component {
+	props: Props
+	state: State
+	id: number
+
+	constructor(props: Props) {
+		super(props)
+
+		this.id = 0
+
+		this.state = {
+			tabs: [
+				this.makeTab(this.id++),
+				this.makeTab(this.id++),
+				this.makeTab(this.id++)
+			],
+			activeTabIndex: 0
+		}
+	}
+
+	makeTab(id: ID) {
+		return (
+			<TabBody label={ `Test Tab ${ id }` } tabId={ id } key={ id }>
+				<div
+					style={{
+						height: '100%',
+						border: '1px solid red',
+						textAlign: 'center',
+						boxSizing: 'border-box',
+						paddingTop: '20%'
+					}}
+				>
+					Hello { id }!
+				</div>
+			</TabBody>
+		)
+	}
+
+	onDragStop(e: Object, data: Object, tabs: Tabs, activeTabIndex: number) {
+		this.setState({
+			tabs,
+			activeTabIndex
+		})
+	}
+
+	onAddTabButtonClick(e: Object, tabs: Tabs) {
+		// Note: Feel free to mutate the returned tabs, it is already deep cloned
+		tabs.push(this.makeTab(this.id++))
+
+		this.setState({
+			tabs,
+			activeTabIndex: this.state.tabs.length - 1
+		})
+	}
+
+	onCloseTabButtonClick(e: Object, tabs: Tabs, closedTabIndex: number) {
+		// Note: Feel free to mutate the returned tabs, it is already deep cloned
+		tabs.splice(closedTabIndex, 1)
+
+		if (closedTabIndex <= this.state.activeTabIndex) {
+			this.setState({
+				tabs,
+				activeTabIndex: (this.state.activeTabIndex === 0) ? 0 : this.state.activeTabIndex - 1
+			})
+		} else {
+			this.setState({
+				tabs
+			})
+		}
+	}
+
+	onSetActiveTab(index: number) {
+		this.setState({
+			activeTabIndex: index
+		})
+	}
+
+	render() {
+		return (
+			<div style={ defaultStyles }>
+				<MacOSTabs
+					tabs={ this.state.tabs }
+					onDragStop={ this.onDragStop.bind(this) }
+					onAddTabButtonClick={ this.onAddTabButtonClick.bind(this) }
+					onCloseTabButtonClick={ this.onCloseTabButtonClick.bind(this) }
+					onSetActiveTab={ this.onSetActiveTab.bind(this) }
+
+					activeTabIndex={ this.state.activeTabIndex }
+				/>
+			</div>
+		)
+	}
+}
+```

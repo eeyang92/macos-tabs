@@ -1,7 +1,7 @@
 [ignore]
 .*/node_modules/fbjs/.*
 .*/index.js
-.*/build/.*
+.*/dist/.*
 .*/git/.*
 
 [include]
