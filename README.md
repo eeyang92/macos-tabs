@@ -156,13 +156,15 @@ export default class Home extends Component {
 	makeTab(id: ID) {
 		return (
 			<TabBody label={ `Test Tab ${ id }` } tabId={ id } key={ id }>
-				<div style={{
-					height: '100%',
-					border: '1px solid red',
-					textAlign: 'center',
-					boxSizing: 'border-box',
-					paddingTop: '20%'
-				}}>
+				<div
+					style={{
+						height: '100%',
+						border: '1px solid red',
+						textAlign: 'center',
+						boxSizing: 'border-box',
+						paddingTop: '20%'
+					}}
+				>
 					Hello { id }!
 				</div>
 			</TabBody>
@@ -175,8 +177,7 @@ export default class Home extends Component {
 		})
 	}
 
-	onAddTabButtonClick(e: Object, tabs: Tabs) {
-		// Note: Feel free to mutate the returned tabs, it is already deep cloned
+	onAddTabButtonClick(e: Object) {
 		tabs.push(this.makeTab(this.id++))
 
 		this.setState({
@@ -184,8 +185,7 @@ export default class Home extends Component {
 		})
 	}
 
-	onCloseTabButtonClick(e: Object, tabs: Tabs, closedTabIndex: number) {
-		// Note: Feel free to mutate the returned tabs, it is already deep cloned
+	onCloseTabButtonClick(e: Object, closedTabIndex: number) {
 		tabs.splice(closedTabIndex, 1)
 
 		this.setState({
@@ -213,7 +213,7 @@ export default class Home extends Component {
 ```
 // @flow
 import React, { Component } from 'react'
-import MacOSTabs, { TabBody } from 'macos-tabs'
+import MacOSTabs, { TabBody } from '/Users/eyang/Projects/MacOSTabs/dist/macos_tabs.lib.js'
 
 type Tabs = Array<Object>
 type ID = number | string
@@ -260,7 +260,8 @@ export default class Home extends Component {
 						paddingTop: '20%'
 					}}
 				>
-					Hello { id }!
+					Hello { id }! <br />
+					<input type="text" name="fname" />
 				</div>
 			</TabBody>
 		)
@@ -273,28 +274,29 @@ export default class Home extends Component {
 		})
 	}
 
-	onAddTabButtonClick(e: Object, tabs: Tabs) {
-		// Note: Feel free to mutate the returned tabs, it is already deep cloned
-		tabs.push(this.makeTab(this.id++))
+	onAddTabButtonClick(e: Object) {
+		const newTabs = this.state.tabs.slice(0)
+
+		newTabs.push(this.makeTab(this.id++))
 
 		this.setState({
-			tabs,
-			activeTabIndex: this.state.tabs.length - 1
+			tabs: newTabs,
+			activeTabIndex: newTabs.length - 1
 		})
 	}
 
-	onCloseTabButtonClick(e: Object, tabs: Tabs, closedTabIndex: number) {
-		// Note: Feel free to mutate the returned tabs, it is already deep cloned
-		tabs.splice(closedTabIndex, 1)
+	onCloseTabButtonClick(e: Object, closedTabIndex: number) {
+		const newTabs = this.state.tabs.slice(0)
+		newTabs.splice(closedTabIndex, 1)
 
 		if (closedTabIndex <= this.state.activeTabIndex) {
 			this.setState({
-				tabs,
+				tabs: newTabs,
 				activeTabIndex: (this.state.activeTabIndex === 0) ? 0 : this.state.activeTabIndex - 1
 			})
 		} else {
 			this.setState({
-				tabs
+				tabs: newTabs
 			})
 		}
 	}
