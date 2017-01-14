@@ -2,8 +2,10 @@
 
 import React, { Component } from 'react'
 import { render } from 'react-dom'
+import $ from 'jquery'
 
 import TabHeader from './tab_header'
+import TabBody from './tab_body'
 
 type ID = number | string
 type Tabs = Array<Object>
@@ -172,26 +174,6 @@ export default class MacOSTabs extends Component {
 		}
 	}
 
-	renderActiveChild(index: number) {
-		if (index > -1 && this.props.tabs[index]) {
-			return this.props.tabs[index].props.children
-		} else if (this.props.tabs.length === 0) {
-			return this.props.defaultContent
-		}
-
-		// const toRender = []
-
-		// for (let i = 0; i < this.props.tabs.length; i++) {
-		// 	if (i !== index) {
-		// 		toRender.push(<div key={{ index }} style={{ display: 'none' }}>{ this.props.tabs[index] }</div>)
-		// 	} else {
-		// 		toRender.push(this.props.tabs[index])
-		// 	}
-		// }
-
-		// return toRender
-	}
-
 	shouldRenderHeader() {
 		if (this.props.showHeader || this.props.tabs.length > 0) {
 			return true
@@ -208,23 +190,52 @@ export default class MacOSTabs extends Component {
 		return height
 	}
 
-	componentDidUpdate() {
+	setTabVisibility() {
+		if (this.props.tabs.length === 0) {
+			return this.props.defaultContent
+		}
+
+		const toRender = []
+
+		for (let i = 0; i < this.props.tabs.length; i++) {
+			const tab = this.props.tabs[i]
+
+			if (i === this.props.activeTabIndex) {
+				toRender.push(<TabBody display tabId={ tab.props.tabId } key={ tab.props.tabId }>{ tab.props.children }</TabBody>)
+			} else {
+				toRender.push(<TabBody tabId={ tab.props.tabId } key={ tab.props.tabId }>{ tab.props.children }</TabBody>)
+			}
+		}
+
+		return toRender
+	}
+
+	renderCustomBodyElement() {
 		const customBodyElementId = this.props.customBodyElementId
 
 		if (customBodyElementId) {
 			render(
-				this.renderActiveChild(this.getActiveTab()),
+				<div style={{ height: '100%' }}>{ this.setTabVisibility() }</div>,
 				document.getElementById(customBodyElementId)
 			)
 		}
 	}
 
+	componentDidMount() {
+		this.renderCustomBodyElement()
+	}
+
+	componentDidUpdate() {
+		this.renderCustomBodyElement()
+	}
+
 	render() {
 		const headerHeight = (this.shouldRenderHeader()) ? this.formatHeight(this.props.headerHeight) : 0
 		const activeTabIndex = this.getActiveTab()
+		const shouldRenderFullHeight = (!this.props.customBodyElementId) ? { height: '100%' } : null
 
 		return (
-			<div style={{ height: '100%' }}>
+			<div style={ shouldRenderFullHeight }>
 				{ this.shouldRenderHeader() &&
 					<div style={{ height: headerHeight }}>
 						<TabHeader
@@ -245,7 +256,7 @@ export default class MacOSTabs extends Component {
 				}
 				{ !this.props.customBodyElementId &&
 					<div style={{ height: `calc(100% - ${ headerHeight })` }}>
-						{ this.renderActiveChild(this.getActiveTab()) }
+						{ this.setTabVisibility() }
 					</div>
 				}
 			</div>

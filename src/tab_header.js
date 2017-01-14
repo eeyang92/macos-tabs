@@ -71,7 +71,7 @@ export default class TabHeader extends Component {
 			this.resetTabPositions()
 		}
 
-		if (!(prevProps.activeTabIndex !== this.props.activeTabIndex)) {
+		if (prevProps.activeTabIndex !== this.props.activeTabIndex) {
 			if (this.props.tabs.length && this.props.activeTabIndex > -1) {
 				this.focusTab(this.props.activeTabIndex, 300)
 			}

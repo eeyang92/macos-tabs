@@ -12,17 +12,22 @@ type Props = {
 	tabId: string | number
 }
 
+type PrivateProps = Props & {
+	display?: string
+}
+
 export default class TabBody extends Component {
-	props: Props
+	props: PrivateProps
 
 	static defaultProps = {
-		label: '',
-		children: null
+		label: ''
 	}
 
 	render() {
+		const display = (this.props.display) ? 'block' : 'none'
+
 		return (
-			<div>
+			<div id={ `macos-tab-body-${ this.props.tabId }` } style={{ height: '100%', display }}>
 				{ this.props.children }
 			</div>
 		)
