@@ -30,7 +30,7 @@ type Props = {
 	// onClick event when the user clicks on a tab header
 	onAddTabButtonClick?: (e: Event) => void,
 
-	// onClick event when the user click on the close tab button on a tab header
+	// onClick event when the user clicks on the close tab button on a tab header
 	onCloseTabButtonClick?: (e: Event, closedTabIndex: number) => void,
 
 	// Event when the user stops dragging a header
@@ -110,15 +110,13 @@ type Props = {
 }
 
 static defaultProps = {
-	label: '',
-	children: null
+	label: ''
 }
 ```
 
 ## Minimal Example
 
 ```javascript
-// @flow
 import React, { Component } from 'react'
 import MacOSTabs, { TabBody } from 'macos-tabs'
 
@@ -178,18 +176,21 @@ export default class Home extends Component {
 	}
 
 	onAddTabButtonClick(e: Object) {
-		tabs.push(this.makeTab(this.id++))
+		const newTabs = this.state.tabs.slice(0)
+
+		newTabs.push(this.makeTab(this.id++))
 
 		this.setState({
-			tabs
+			tabs: newTabs
 		})
 	}
 
 	onCloseTabButtonClick(e: Object, closedTabIndex: number) {
-		tabs.splice(closedTabIndex, 1)
+		const newTabs = this.state.tabs.slice(0)
+		newTabs.splice(closedTabIndex, 1)
 
 		this.setState({
-			tabs
+			tabs: newTabs
 		})
 	}
 
@@ -213,7 +214,7 @@ export default class Home extends Component {
 ```
 // @flow
 import React, { Component } from 'react'
-import MacOSTabs, { TabBody } from '/Users/eyang/Projects/MacOSTabs/dist/macos_tabs.lib.js'
+import MacOSTabs, { TabBody } from 'macos-tabs'
 
 type Tabs = Array<Object>
 type ID = number | string

@@ -15,7 +15,7 @@ type Props = {
 	// onClick event when the user clicks on a tab header
 	onAddTabButtonClick?: (e: Event) => void,
 
-	// onClick event when the user click on the close tab button on a tab header
+	// onClick event when the user clicks on the close tab button on a tab header
 	onCloseTabButtonClick?: (e: Event, closedTabIndex: number) => void,
 
 	// Event when the user stops dragging a header
@@ -98,10 +98,14 @@ export default class MacOSTabs extends Component {
 		}
 	}
 
-	getActiveTab() {
-		const activeTab = (typeof this.props.activeTabIndex === 'number') ? this.props.activeTabIndex : this.state.activeTabIndex
+	getActiveTabIndex() {
+		let activeTabIndex = (typeof this.props.activeTabIndex === 'number') ? this.props.activeTabIndex : this.state.activeTabIndex
 
-		return activeTab
+		if (activeTabIndex >= this.props.tabs.length) {
+			activeTabIndex = this.props.tabs.length - 1
+		}
+
+		return activeTabIndex
 	}
 
 	setActiveTab(index: number) {
@@ -125,7 +129,7 @@ export default class MacOSTabs extends Component {
 			this.props.onAddTabButtonClick(e)
 		}
 
-		this.setActiveTab(tabs.length - 1)
+		this.setActiveTab(tabs.length) // Purposely set to last index + 1
 	}
 
 	onCloseTabButtonClick(e: Event, tabs: Tabs, closedTabIndex: number) {
@@ -133,7 +137,7 @@ export default class MacOSTabs extends Component {
 			this.props.onCloseTabButtonClick(e, closedTabIndex)
 		}
 
-		const activeTabIndex = this.getActiveTab()
+		const activeTabIndex = this.getActiveTabIndex()
 
 		if (closedTabIndex <= activeTabIndex) {
 			this.onSetActiveTab((activeTabIndex === 0) ? 0 : activeTabIndex - 1)
@@ -200,7 +204,7 @@ export default class MacOSTabs extends Component {
 		for (let i = 0; i < this.props.tabs.length; i++) {
 			const tab = this.props.tabs[i]
 
-			if (i === this.props.activeTabIndex) {
+			if (i === this.getActiveTabIndex()) {
 				toRender.push(<TabBody display tabId={ tab.props.tabId } key={ tab.props.tabId }>{ tab.props.children }</TabBody>)
 			} else {
 				toRender.push(<TabBody tabId={ tab.props.tabId } key={ tab.props.tabId }>{ tab.props.children }</TabBody>)
@@ -231,7 +235,7 @@ export default class MacOSTabs extends Component {
 
 	render() {
 		const headerHeight = (this.shouldRenderHeader()) ? this.formatHeight(this.props.headerHeight) : 0
-		const activeTabIndex = this.getActiveTab()
+		const activeTabIndex = this.getActiveTabIndex()
 		const shouldRenderFullHeight = (!this.props.customBodyElementId) ? { height: '100%' } : null
 
 		return (
