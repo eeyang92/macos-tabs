@@ -1,6 +1,6 @@
 {
   "name": "macos-tabs",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "macOS-like Tabs for React (designed specifically for Electron)",
   "main": "dist/macos_tabs.lib.js",
   "author": {
@@ -9,9 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eeyang92/macos-tabs.git"
+    "url": "https://github.com/eeyang92/macos-tabs.git"
   },
   "scripts": {
+    "pre-pub": "npm test && npm version -f",
+    "test": "NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --compilers js:babel-register --recursive --require ./test/init.js test/**/*.spec.js",
+    "test-watch": "npm test -- --watch",
     "flow-typed": "./node_modules/.bin/flow-typed",
     "size": "./node_modules/.bin/webpack --json | ./node_modules/.bin/webpack-bundle-size-analyzer",
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.prod.config.js -p --progress --profile --colors",
@@ -35,7 +38,9 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
+    "chai-enzyme": "^0.6.1",
     "css-loader": "^0.26.1",
+    "css-modules-require-hook": "^4.0.5",
     "enzyme": "^2.6.0",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
@@ -54,10 +59,13 @@
     "flow-bin": "^0.37.1",
     "flow-typed": "^2.0.0",
     "html-webpack-plugin": "^2.24.1",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^9.9.1",
     "json-loader": "^0.5.4",
     "mocha": "^3.2.0",
     "pkgfiles": "^2.3.2",
     "react-addons-test-utils": "^15.4.1",
+    "sinon": "^1.17.7",
     "spectron": "^3.4.0",
     "style-loader": "^0.13.1",
     "tcomb": "^3.2.15",
