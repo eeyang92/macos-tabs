@@ -11,10 +11,10 @@ type Tabs = Array<Object>
 type Event = Object
 
 type Props = {
-	// onClick event when the user clicks on a tab header
+	// onClick event when the user clicks on the AddTabButton on a tab header
 	onAddTabButtonClick?: (e: Event) => void,
 
-	// onClick event when the user clicks on the close tab button on a tab header
+	// onClick event when the user clicks on the CloseTabButton on a tab header
 	onCloseTabButtonClick?: (e: Event, closedTabIndex: number) => void,
 
 	// Event when the user stops dragging a header
@@ -54,13 +54,19 @@ type Props = {
 	showHeader: boolean,
 
 	// Declare the header height in px (note: styles have not been tested with
-	// anything but the default of 24px)
+	// anything besides the default of 24px, this is a WIP)
 	headerHeight: number | string,
 
 	// Declare a custom element that the body should be rendered into
 	// instead of directly below the tab headers
 	// i.e. <div id="tabBody" />
 	customBodyElementId?: string,
+
+	// Set tab scroll behavior
+	scrollX?: 'normal' | 'reversed' | 'disabled',
+
+	// Set tab scroll behavior
+	scrollY?: 'normal' | 'reversed' | 'disabled',
 
 	// Experimental/Not Completed
 	onMouseEnter?: () => void,
@@ -82,6 +88,8 @@ export default class MacOSTabs extends Component {
 
 	static defaultProps = {
 		tabs: [],
+		scrollX: 'normal',
+		scrollY: 'disabled',
 		addTabPosition: 'end',
 		showHeader: true,
 		headerHeight: 24,
@@ -253,6 +261,8 @@ export default class MacOSTabs extends Component {
 							onMouseLeave={ this.onMouseLeave.bind(this) }
 							activeTabIndex={ activeTabIndex }
 							addTabPosition={ this.props.addTabPosition }
+							scrollX={ this.props.scrollX }
+							scrollY={ this.props.scrollY }
 							tabs={ this.props.tabs }
 						/>
 					</div>

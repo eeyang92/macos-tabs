@@ -25,6 +25,8 @@ type Props = {
 	onMouseEnter?: (e: Object, index: number) => void,
 	onMouseLeave?: (e: Object, index: number) => void,
 	addTabPosition?: 'start' | 'end' | 'none',
+	scrollX?: 'normal' | 'reversed' | 'disabled',
+	scrollY?: 'normal' | 'reversed' | 'disabled',
 	activeTabIndex: number,
 	dragOutDistance: number,
 	tabs: Tabs
@@ -49,6 +51,8 @@ export default class TabHeader extends Component {
 	onScroll: () => void
 
 	static defaultProps = {
+		scrollX: 'normal',
+		scrollY: 'disabled',
 		addTabPosition: 'end',
 		activeTabIndex: 0,
 		tabs: [],
@@ -213,14 +217,23 @@ export default class TabHeader extends Component {
 	}
 
 	onScroll(e: Object) {
-		// console.log($(e.target).scrollLeft())
-		// const deltaX = e.originalEvent.deltaX
-		// console.log(e.originalEvent.deltaX)
+		const deltaX = e.originalEvent.deltaX
+		const deltaY = e.originalEvent.deltaY
+		const $target = $('.innerTabScrollSelector')
 
-		// const $innerTabScrollSelector = $('.innerTabScrollSelector')
-		// console.log('should scroll to: ', $innerTabScrollSelector.scrollLeft() + deltaX)
+		if (this.props.scrollX !== 'normal') {
+			e.preventDefault()
+		}
 
-		// $innerTabScrollSelector.scrollLeft($innerTabScrollSelector.scrollLeft() + deltaX)
+		if (this.props.scrollX === 'reversed') {
+			$target.scrollLeft($target.scrollLeft() - deltaX)
+		}
+
+		if (this.props.scrollY === 'normal') {
+			$target.scrollLeft($target.scrollLeft() - deltaY)
+		} else if (this.props.scrollY === 'reversed') {
+			$target.scrollLeft($target.scrollLeft() + deltaY)
+		}
 	}
 
 	onGetRef(id: ID, ref: Ref) {
