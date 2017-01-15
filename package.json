@@ -12,7 +12,7 @@
     "url": "https://github.com/eeyang92/macos-tabs.git"
   },
   "scripts": {
-    "pre-pub": "npm test && npm build && npm version -f",
+    "pre-pub": "npm test && npm run build && npm version -f",
     "pub": "git push --tags origin master && npm publish",
     "test": "NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --compilers js:babel-register --recursive --require ./test/init.js test/**/*.spec.js",
     "test-watch": "npm test -- --watch",
