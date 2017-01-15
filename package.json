@@ -13,6 +13,7 @@
   },
   "scripts": {
     "pre-pub": "npm test && npm version -f",
+    "pub": "git push --tags origin master && npm publish",
     "test": "NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --compilers js:babel-register --recursive --require ./test/init.js test/**/*.spec.js",
     "test-watch": "npm test -- --watch",
     "flow-typed": "./node_modules/.bin/flow-typed",
