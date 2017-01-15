@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import { render } from 'react-dom'
-import $ from 'jquery'
 
 import TabHeader from './tab_header'
 import TabBody from './tab_body'

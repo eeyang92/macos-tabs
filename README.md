@@ -1,5 +1,7 @@
 # MacOS Tabs
 
+[![npm version](https://badge.fury.io/js/macos-tabs.svg)](https://www.npmjs.com/package/macos-tabs)
+
 ## Note
 
 This package is a work in progress. More examples and configuration options will be put up as soon as possible!
@@ -211,7 +213,7 @@ export default class Home extends Component {
 
 ## Controlled Active Tab Example
 
-```
+```javascript
 // @flow
 import React, { Component } from 'react'
 import MacOSTabs, { TabBody } from 'macos-tabs'

@@ -15,7 +15,7 @@ type Ref = null | HTMLElement
 
 type Props = {
 	id: ID,
-	closeTabButtonPosition: CloseTabButtonPosition,
+	closeTabButtonPosition?: CloseTabButtonPosition,
 	onCloseTabButtonClick?: (e: Object) => void,
 	onClick?: (e: Object) => void,
 	onMouseDown?: (e: Object) => void,
@@ -25,11 +25,11 @@ type Props = {
 	onMouseEnter?: (e: Object) => void,
 	onMouseLeave?: (e: Object) => void,
 	getRef?: (ref: Ref) => void,
-	label: string,
-	active: boolean
+	label?: string,
+	active?: boolean
 }
 
-export default class Tab extends Component {
+class Tab extends Component {
 	props: Props
 
 	static defaultProps = {
@@ -144,3 +144,9 @@ export default class Tab extends Component {
 		)
 	}
 }
+
+Tab.propTypes = {
+	id: React.PropTypes.number.isRequired
+}
+
+export default Tab
