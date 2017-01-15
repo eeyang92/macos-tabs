@@ -25,11 +25,11 @@ describe('<CloseTabButton />', () => {
 	})
 
 	it('should have child "div" element with an "x"', () => {
-		expect(wrapper.find('#macos_tabs_close_tab_button_inner_div')).to.have.text('x')
+		expect(wrapper.childAt(0)).to.have.text('x')
 	})
 
 	it('should have child "div" element with offset styles', () => {
-		expect(wrapper.find('#macos_tabs_close_tab_button_inner_div')).to.have.style('margin-top')
-		expect(wrapper.find('#macos_tabs_close_tab_button_inner_div')).to.have.style('margin-left')
+		expect(wrapper.childAt(0)).to.have.style('margin-top')
+		expect(wrapper.childAt(0)).to.have.style('margin-left')
 	})
 })

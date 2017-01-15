@@ -33,7 +33,6 @@ export default class CloseTabButton extends Component {
 				onMouseDown={ this.onMouseDown.bind(this) }
 			>
 				<div
-					id='macos_tabs_close_tab_button_inner_div'
 					style={{ marginTop: '-5px', marginLeft: '-1px' }}
 				>
 					x

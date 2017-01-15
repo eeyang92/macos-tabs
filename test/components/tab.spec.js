@@ -27,8 +27,8 @@ describe('<Tab />', () => {
 		expect(wrapper).to.have.type(Tab)
 	})
 
-	it('should contain the props id === 1', () => {
-		expect(wrapper).to.have.prop('id', 1)
+	it('should contain the prop id', () => {
+		expect(wrapper).to.have.prop('id')
 	})
 
 	it('should contain a Draggable Component', () => {

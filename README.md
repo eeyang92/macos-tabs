@@ -129,24 +129,12 @@ static defaultProps = {
 import React, { Component } from 'react'
 import MacOSTabs, { TabBody } from 'macos-tabs'
 
-type Tabs = Array<Object>
-type ID = number | string
-
-type Props = Object
-type State = {
-	tabs: Tabs
-}
-
 const defaultStyles = {
 	height: '100%'
 }
 
 export default class Home extends Component {
-	props: Props
-	state: State
-	id: number
-
-	constructor(props: Props) {
+	constructor(props) {
 		super(props)
 
 		this.id = 0
@@ -160,7 +148,7 @@ export default class Home extends Component {
 		}
 	}
 
-	makeTab(id: ID) {
+	makeTab(id) {
 		return (
 			<TabBody label={ `Test Tab ${ id }` } tabId={ id } key={ id }>
 				<div
@@ -178,13 +166,13 @@ export default class Home extends Component {
 		)
 	}
 
-	onDragStop(e: Object, data: Object, tabs: Tabs, activeTabIndex: number) {
+	onDragStop(e, data, tabs, activeTabIndex) {
 		this.setState({
 			tabs
 		})
 	}
 
-	onAddTabButtonClick(e: Object) {
+	onAddTabButtonClick(e) {
 		const newTabs = this.state.tabs.slice(0)
 
 		newTabs.push(this.makeTab(this.id++))
@@ -194,7 +182,7 @@ export default class Home extends Component {
 		})
 	}
 
-	onCloseTabButtonClick(e: Object, closedTabIndex: number) {
+	onCloseTabButtonClick(e, closedTabIndex) {
 		const newTabs = this.state.tabs.slice(0)
 		newTabs.splice(closedTabIndex, 1)
 
@@ -218,32 +206,18 @@ export default class Home extends Component {
 }
 ```
 
-## Controlled Active Tab Example
+## Controlled Active Tab & CustomBodyElementID Example
 
 ```javascript
-// @flow
 import React, { Component } from 'react'
 import MacOSTabs, { TabBody } from 'macos-tabs'
-
-type Tabs = Array<Object>
-type ID = number | string
-
-type Props = Object
-type State = {
-	tabs: Tabs,
-	activeTabIndex: number
-}
 
 const defaultStyles = {
 	height: '100%'
 }
 
 export default class Home extends Component {
-	props: Props
-	state: State
-	id: number
-
-	constructor(props: Props) {
+	constructor(props) {
 		super(props)
 
 		this.id = 0
@@ -258,7 +232,7 @@ export default class Home extends Component {
 		}
 	}
 
-	makeTab(id: ID) {
+	makeTab(id) {
 		return (
 			<TabBody label={ `Test Tab ${ id }` } tabId={ id } key={ id }>
 				<div
@@ -270,21 +244,26 @@ export default class Home extends Component {
 						paddingTop: '20%'
 					}}
 				>
-					Hello { id }! <br />
-					<input type="text" name="fname" />
+					<form>
+						<label>
+							Name { id }:
+							<input type="text" name="name" />
+						</label>
+						<input type="submit" value="Submit" />
+					</form>
 				</div>
 			</TabBody>
 		)
 	}
 
-	onDragStop(e: Object, data: Object, tabs: Tabs, activeTabIndex: number) {
+	onDragStop(e, data, tabs, activeTabIndex) {
 		this.setState({
 			tabs,
 			activeTabIndex
 		})
 	}
 
-	onAddTabButtonClick(e: Object) {
+	onAddTabButtonClick(e) {
 		const newTabs = this.state.tabs.slice(0)
 
 		newTabs.push(this.makeTab(this.id++))
@@ -295,7 +274,7 @@ export default class Home extends Component {
 		})
 	}
 
-	onCloseTabButtonClick(e: Object, closedTabIndex: number) {
+	onCloseTabButtonClick(e, closedTabIndex) {
 		const newTabs = this.state.tabs.slice(0)
 		newTabs.splice(closedTabIndex, 1)
 
@@ -311,7 +290,7 @@ export default class Home extends Component {
 		}
 	}
 
-	onSetActiveTab(index: number) {
+	onSetActiveTab(index) {
 		this.setState({
 			activeTabIndex: index
 		})
@@ -327,7 +306,10 @@ export default class Home extends Component {
 					onCloseTabButtonClick={ this.onCloseTabButtonClick.bind(this) }
 					onSetActiveTab={ this.onSetActiveTab.bind(this) }
 					activeTabIndex={ this.state.activeTabIndex }
+					defaultContent={ <div>Add a tab to get started!</div> }
+					customBodyElementId='custom1'
 				/>
+				<div id='custom1' style={{ height: 'calc(100% - 24px)' }} />
 			</div>
 		)
 	}
