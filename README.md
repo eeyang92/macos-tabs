@@ -39,6 +39,8 @@ type Props = {
 	// Event when the user stops dragging a header
 	// The updated tabs contain the new ordering, you can directly update your state with
 	// these returned tabs
+	// data is passed through from the Draggable Component, in most cases you will
+	// not need to use it
 	onDragStop?: (e: Event, data: Object, tabs: Tabs, activeTabIndex: number) => void,
 
 	// Event when the user clicks on a tab header
@@ -95,13 +97,15 @@ type Props = {
 }
 
 static defaultProps = {
-	tabs: [],
-	addTabPosition: 'end',
-	showHeader: true,
-	headerHeight: 24,
-	dragOutDistance: 40,
-	autoActiveTab: true
-}
+		tabs: [],
+		scrollX: 'normal',
+		scrollY: 'disabled',
+		addTabPosition: 'end',
+		showHeader: true,
+		headerHeight: 24,
+		dragOutDistance: 40,
+		autoActiveTab: true
+	}
 ```
 
 ### TabBody
