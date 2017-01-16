@@ -1,6 +1,6 @@
 {
   "name": "macos-tabs",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "macOS-like Tabs for React (designed specifically for Electron)",
   "main": "dist/macos_tabs.lib.js",
   "author": {
