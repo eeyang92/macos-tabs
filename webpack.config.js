@@ -1,6 +1,8 @@
 const webpack = require('webpack')
+const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
+	target: 'node',
 	devtool: 'inline-source-map',
 	entry: './index.js',
 	output: {
@@ -9,6 +11,7 @@ module.exports = {
 		library: 'macOSTabs',
 		libraryTarget: 'commonjs2'
 	},
+	externals: [nodeExternals()],
 	module: {
 		loaders: [
 			{
