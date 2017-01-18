@@ -62,3 +62,12 @@
 .macOSTabNormal:hover .macOSCloseTabButton {
 	opacity: 1;
 }
+
+.macOSTabLabel {
+	height: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-left: 25px;
+	padding-right: 25px;
+}
