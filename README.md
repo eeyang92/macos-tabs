@@ -6,6 +6,8 @@
 
 This package is a work in progress. More examples and configuration options will be put up as soon as possible!
 
+Also note, since 1.3.0 the order of arguments in onDragStop has been changed to bring it in line with the other props
+
 ## Installation
 
 ```bash
@@ -34,18 +36,23 @@ type Props = {
 	onAddTabButtonClick?: (e: Event) => void,
 
 	// onClick event when the user clicks on the CloseTabButton on a tab header
-	onCloseTabButtonClick?: (e: Event, closedTabIndex: number) => void,
+	onCloseTabButtonClick?: (e: Event, index: number) => void,
 
 	// Event when the user stops dragging a header
 	// The updated tabs contain the new ordering, you can directly update your state with
 	// these returned tabs
-	// data is passed through from the Draggable Component, in most cases you will
-	// not need to use it
-	onDragStop?: (e: Event, data: Object, tabs: Tabs, activeTabIndex: number) => void,
+	// The updated index of the active tab is also provided
+	onDragStop?: (e: Event, index: number, tabs: Tabs) => void,
 
 	// Event when the user clicks on a tab header
 	// The index of the clicked header is passed back
 	onTabClick?: (e: Event, index: number) => void,
+
+	// Event when the user's mouse enters a tab header
+	onTabMouseEnter?: (e: Event, index: number) => void,
+
+	// Even when the user's mouse leaves a tab header
+	onTabMouseLeave?: (e: Event, index: number) => void,
 
 	// Event when the activeTabIndex is updated internally
 	// This allows you to keep track of the activeTabIndex even
@@ -90,22 +97,20 @@ type Props = {
 	scrollY?: 'normal' | 'reversed' | 'disabled',
 
 	// Experimental/Not Completed
-	onMouseEnter?: () => void,
-	onMouseLeave?: () => void,
-	onDragOut?: (e: Event, data: Object, outTabIndex: number) => void,
+	onDragOut?: (e: Event, outTabIndex: number) => void,
 	dragOutDistance: number
 }
 
 static defaultProps = {
-		tabs: [],
-		scrollX: 'normal',
-		scrollY: 'disabled',
-		addTabPosition: 'end',
-		showHeader: true,
-		headerHeight: 24,
-		dragOutDistance: 40,
-		autoActiveTab: true
-	}
+	tabs: [],
+	scrollX: 'normal',
+	scrollY: 'disabled',
+	addTabPosition: 'end',
+	showHeader: true,
+	headerHeight: 24,
+	dragOutDistance: 40,
+	autoActiveTab: true
+}
 ```
 
 ### TabBody
@@ -170,7 +175,7 @@ export default class Home extends Component {
 		)
 	}
 
-	onDragStop(e, data, tabs, activeTabIndex) {
+	onDragStop(e, activeTabIndex, tabs) {
 		this.setState({
 			tabs
 		})
@@ -188,6 +193,7 @@ export default class Home extends Component {
 
 	onCloseTabButtonClick(e, closedTabIndex) {
 		const newTabs = this.state.tabs.slice(0)
+
 		newTabs.splice(closedTabIndex, 1)
 
 		this.setState({
@@ -260,7 +266,7 @@ export default class Home extends Component {
 		)
 	}
 
-	onDragStop(e, data, tabs, activeTabIndex) {
+	onDragStop(e, activeTabIndex, tabs) {
 		this.setState({
 			tabs,
 			activeTabIndex
@@ -280,6 +286,7 @@ export default class Home extends Component {
 
 	onCloseTabButtonClick(e, closedTabIndex) {
 		const newTabs = this.state.tabs.slice(0)
+
 		newTabs.splice(closedTabIndex, 1)
 
 		if (closedTabIndex <= this.state.activeTabIndex) {

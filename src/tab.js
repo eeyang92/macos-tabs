@@ -62,7 +62,6 @@ class Tab extends Component {
 		if (this.props.onMouseEnter) {
 			this.props.onMouseEnter(e)
 		}
-		// Hover for hotkeys?
 	}
 
 	onMouseLeave(e: Object) {

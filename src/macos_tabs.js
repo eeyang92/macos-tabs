@@ -15,18 +15,23 @@ type Props = {
 	onAddTabButtonClick?: (e: Event) => void,
 
 	// onClick event when the user clicks on the CloseTabButton on a tab header
-	onCloseTabButtonClick?: (e: Event, closedTabIndex: number) => void,
+	onCloseTabButtonClick?: (e: Event, index: number) => void,
 
 	// Event when the user stops dragging a header
 	// The updated tabs contain the new ordering, you can directly update your state with
 	// these returned tabs
-	// data is passed through from the Draggable Component, in most cases you will
-	// not need to use it
-	onDragStop?: (e: Event, data: Object, tabs: Tabs, activeTabIndex: number) => void,
+	// The updated index of the active tab is also provided
+	onDragStop?: (e: Event, index: number, tabs: Tabs) => void,
 
 	// Event when the user clicks on a tab header
 	// The index of the clicked header is passed back
 	onTabClick?: (e: Event, index: number) => void,
+
+	// Event when the user's mouse enters a tab header
+	onTabMouseEnter?: (e: Event, index: number) => void,
+
+	// Even when the user's mouse leaves a tab header
+	onTabMouseLeave?: (e: Event, index: number) => void,
 
 	// Event when the activeTabIndex is updated internally
 	// This allows you to keep track of the activeTabIndex even
@@ -71,9 +76,7 @@ type Props = {
 	scrollY?: 'normal' | 'reversed' | 'disabled',
 
 	// Experimental/Not Completed
-	onMouseEnter?: () => void,
-	onMouseLeave?: () => void,
-	onDragOut?: (e: Event, data: Object, outTabIndex: number) => void,
+	onDragOut?: (e: Event, outTabIndex: number) => void,
 	dragOutDistance: number
 }
 
@@ -155,13 +158,13 @@ export default class MacOSTabs extends Component {
 
 	onDragOut(e: Event, data: Object, tabs: Tabs, index: number) {
 		if (this.props.onDragOut) {
-			this.props.onDragOut(e, data, index)
+			this.props.onDragOut(e, index)
 		}
 	}
 
 	onDragStop(e: Event, data: Object, tabs: Tabs, activeTabIndex: number) {
 		if (this.props.onDragStop) {
-			this.props.onDragStop(e, data, tabs, activeTabIndex)
+			this.props.onDragStop(e, activeTabIndex, tabs)
 		}
 
 		this.onSetActiveTab(activeTabIndex)
@@ -175,15 +178,15 @@ export default class MacOSTabs extends Component {
 		this.onSetActiveTab(index)
 	}
 
-	onMouseEnter() {
-		if (this.props.onMouseEnter) {
-			this.props.onMouseEnter()
+	onTabMouseEnter(e: Event, index: number) {
+		if (this.props.onTabMouseEnter) {
+			this.props.onTabMouseEnter(e, index)
 		}
 	}
 
-	onMouseLeave() {
-		if (this.props.onMouseLeave) {
-			this.props.onMouseLeave()
+	onTabMouseLeave(e: Event, index: number) {
+		if (this.props.onTabMouseLeave) {
+			this.props.onTabMouseLeave(e, index)
 		}
 	}
 
@@ -259,8 +262,8 @@ export default class MacOSTabs extends Component {
 							dragOutDistance={ this.props.dragOutDistance }
 							onDragStop={ this.onDragStop.bind(this) }
 							onTabClick={ this.onTabClick.bind(this) }
-							onMouseEnter={ this.onMouseEnter.bind(this) }
-							onMouseLeave={ this.onMouseLeave.bind(this) }
+							onMouseEnter={ this.onTabMouseEnter.bind(this) }
+							onMouseLeave={ this.onTabMouseLeave.bind(this) }
 							activeTabIndex={ activeTabIndex }
 							addTabPosition={ this.props.addTabPosition }
 							scrollX={ this.props.scrollX }
