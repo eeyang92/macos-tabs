@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import styles from '../styles/add_tab_button.css'
 
 type Props = {
-	onClick: (e: Object) => void
+	onClick: (e: Event) => void
 }
 
 export default class AddTabButton extends Component {

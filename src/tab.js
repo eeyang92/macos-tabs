@@ -16,14 +16,14 @@ type Ref = null | HTMLElement
 type Props = {
 	id: ID,
 	closeTabButtonPosition?: CloseTabButtonPosition,
-	onCloseTabButtonClick?: (e: Object) => void,
-	onClick?: (e: Object) => void,
-	onMouseDown?: (e: Object) => void,
-	onDragStart?: (e: Object, data: Object) => void | false,
-	onDrag?: (e: Object, data: Object) => void | false,
-	onDragStop?: (e: Object, data: Object) => void | false,
-	onMouseEnter?: (e: Object) => void,
-	onMouseLeave?: (e: Object) => void,
+	onCloseTabButtonClick?: (e: Event) => void,
+	onClick?: (e: Event) => void,
+	onMouseDown?: (e: Event) => void,
+	onDragStart?: (e: Event, data: Object) => void | false,
+	onDrag?: (e: Event, data: Object) => void | false,
+	onDragStop?: (e: Event, data: Object) => void | false,
+	onMouseEnter?: (e: Event) => void,
+	onMouseLeave?: (e: Event) => void,
 	getRef?: (ref: Ref) => void,
 	label?: string,
 	active?: boolean
@@ -38,13 +38,13 @@ class Tab extends Component {
 		active: false
 	}
 
-	onDragStart(e: Object, data: Object) {
+	onDragStart(e: Event, data: Object) {
 		if (this.props.onDragStart) {
 			this.props.onDragStart(e, data)
 		}
 	}
 
-	onDrag(e: Object, data: Object) {
+	onDrag(e: Event, data: Object) {
 		// this.onClick()
 
 		if (this.props.onDrag) {
@@ -52,25 +52,25 @@ class Tab extends Component {
 		}
 	}
 
-	onDragStop(e: Object, data: Object) {
+	onDragStop(e: Event, data: Object) {
 		if (this.props.onDragStop) {
 			this.props.onDragStop(e, data)
 		}
 	}
 
-	onMouseEnter(e: Object) {
+	onMouseEnter(e: Event) {
 		if (this.props.onMouseEnter) {
 			this.props.onMouseEnter(e)
 		}
 	}
 
-	onMouseLeave(e: Object) {
+	onMouseLeave(e: Event) {
 		if (this.props.onMouseLeave) {
 			this.props.onMouseLeave(e)
 		}
 	}
 
-	onClick(e: Object) {
+	onClick(e: Event) {
 		if (e) {
 			// e.stopPropagation()
 			// e.preventDefault()
@@ -81,7 +81,7 @@ class Tab extends Component {
 		}
 	}
 
-	onMouseDown(e: Object) {
+	onMouseDown(e: Event) {
 		if (e) {
 			// e.stopPropagation()
 			// e.preventDefault()
@@ -92,7 +92,7 @@ class Tab extends Component {
 		}
 	}
 
-	onCloseTabButtonClick(e: Object) {
+	onCloseTabButtonClick(e: Event) {
 		if (this.props.onCloseTabButtonClick) {
 			this.props.onCloseTabButtonClick(e)
 		}

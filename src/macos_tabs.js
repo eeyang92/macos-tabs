@@ -7,8 +7,7 @@ import TabHeader from './tab_header'
 import TabBody from './tab_body'
 
 type ID = number | string
-type Tabs = Array<Object>
-type Event = Object
+type Tabs = Array<TabBody>
 
 type Props = {
 	// onClick event when the user clicks on the AddTabButton on a tab header

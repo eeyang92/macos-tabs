@@ -5,13 +5,13 @@ import classnames from 'classnames'
 import styles from '../styles/tab.css'
 
 type Props = {
-	onClick: (e: Object) => void
+	onClick: (e: Event) => void
 }
 
 export default class CloseTabButton extends Component {
 	props: Props
 
-	onClick(e: Object) {
+	onClick(e: Event) {
 		if (this.props.onClick) {
 			e.stopPropagation()
 
@@ -19,7 +19,7 @@ export default class CloseTabButton extends Component {
 		}
 	}
 
-	onMouseDown(e: Object) {
+	onMouseDown(e: Event) {
 		e.stopPropagation()
 	}
 

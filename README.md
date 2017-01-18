@@ -10,13 +10,13 @@ Also note, since 1.3.0 the order of arguments in onDragStop has been changed to 
 
 ## Installation
 
-```bash
+```sh
 npm install --save macos-tabs
 ```
 
 or
 
-```bash
+```sh
 yarn add macos-tabs
 ```
 
@@ -28,8 +28,7 @@ yarn add macos-tabs
 
 ```javascript
 type ID = number | string
-type Tabs = Array<Object>
-type Event = Object
+type Tabs = Array<TabBody>
 
 type Props = {
 	// onClick event when the user clicks on the AddTabButton on a tab header
@@ -117,11 +116,11 @@ static defaultProps = {
 
 ```javascript
 type Props = {
-	// Label that will be diplayed on the tab header
+	// Label that will be displayed on the tab header
 	label?: string | number,
 
 	// Children components to render
-	children?: Object,
+	children?: HTMLElement | Component<*, *, *>,
 
 	// Unique tabId
 	tabId: string | number

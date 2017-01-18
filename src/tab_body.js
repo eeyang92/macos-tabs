@@ -6,7 +6,7 @@ type Props = {
 	label?: string | number,
 
 	// Children components to render
-	children?: Object,
+	children?: HTMLElement | Component<*, *, *>,
 
 	// Unique tabId
 	tabId: string | number

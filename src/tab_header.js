@@ -17,13 +17,13 @@ type Tabs = Array<Object>
 
 type Props = {
 	onSetActiveTab?: (index: number) => void,
-	onAddTabButtonClick?: (e: Object, tabs: Tabs) => void,
-	onCloseTabButtonClick?: (e: Object, tabs: Tabs, closedTabIndex: number) => void,
-	onDragStop?: (e: Object, data: Object, tabs: Tabs, nextActiveTabIndex: number) => void,
-	onDragOut?: (e: Object, data: Object, tabs: Tabs, index: number) => void,
-	onTabClick?: (e: Object, index: number) => void,
-	onMouseEnter?: (e: Object, index: number) => void,
-	onMouseLeave?: (e: Object, index: number) => void,
+	onAddTabButtonClick?: (e: Event, tabs: Tabs) => void,
+	onCloseTabButtonClick?: (e: Event, tabs: Tabs, closedTabIndex: number) => void,
+	onDragStop?: (e: Event, data: Object, tabs: Tabs, nextActiveTabIndex: number) => void,
+	onDragOut?: (e: Event, data: Object, tabs: Tabs, index: number) => void,
+	onTabClick?: (e: Event, index: number) => void,
+	onMouseEnter?: (e: Event, index: number) => void,
+	onMouseLeave?: (e: Event, index: number) => void,
 	addTabPosition?: 'start' | 'end' | 'none',
 	scrollX?: 'normal' | 'reversed' | 'disabled',
 	scrollY?: 'normal' | 'reversed' | 'disabled',
@@ -115,7 +115,7 @@ export default class TabHeader extends Component {
 		return renderList
 	}
 
-	onAddTabButtonClick(e: Object) {
+	onAddTabButtonClick(e: Event) {
 		const currentTabs = this.props.tabs.slice(0)
 
 		if (this.props.onAddTabButtonClick) {
@@ -150,7 +150,7 @@ export default class TabHeader extends Component {
 		}
 	}
 
-	onCloseTabButtonClick(id: ID, e: Object) {
+	onCloseTabButtonClick(id: ID, e: Event) {
 		const closedTabIndex = this.findTabIndexById(id)
 
 		if (closedTabIndex > -1) {
@@ -162,7 +162,7 @@ export default class TabHeader extends Component {
 		}
 	}
 
-	onTabClick(id: ID, e: Object) {
+	onTabClick(id: ID, e: Event) {
 		const index = this.findTabIndexById(id)
 
 		if (this.props.onTabClick) {
@@ -170,7 +170,7 @@ export default class TabHeader extends Component {
 		}
 	}
 
-	onMouseEnter(id: ID, e: Object) {
+	onMouseEnter(id: ID, e: Event) {
 		const index = this.findTabIndexById(id)
 
 		if (this.props.onMouseEnter) {
@@ -178,7 +178,7 @@ export default class TabHeader extends Component {
 		}
 	}
 
-	onMouseLeave(id: ID, e: Object) {
+	onMouseLeave(id: ID, e: Event) {
 		const index = this.findTabIndexById(id)
 
 		if (this.props.onMouseLeave) {
@@ -186,7 +186,7 @@ export default class TabHeader extends Component {
 		}
 	}
 
-	onTabMouseDown(id: ID, e: Object) {
+	onTabMouseDown(id: ID, e: Event) {
 		const index = this.findTabIndexById(id)
 
 		this.setActiveTab(index)
@@ -216,7 +216,7 @@ export default class TabHeader extends Component {
 		$(ref).on('mousewheel', this.onScroll)
 	}
 
-	onScroll(e: Object) {
+	onScroll(e: Event) {
 		const deltaX = e.originalEvent.deltaX
 		const deltaY = e.originalEvent.deltaY
 		const $target = $('.innerTabScrollSelector')
@@ -244,17 +244,17 @@ export default class TabHeader extends Component {
 		}
 	}
 
-	onDragOut(e: Object, data: Object, tabs: Tabs, index: number) {
+	onDragOut(e: Event, data: Object, tabs: Tabs, index: number) {
 		if (this.props.onDragOut) {
 			this.props.onDragOut(e, data, tabs, index)
 		}
 	}
 
-	onDragStart(id: ID, e: Object, data: Object) {
+	onDragStart(id: ID, e: Event, data: Object) {
 		this.virtualTabs = new VirtualTabs(this.props.tabs, this.tabRefs, id)
 	}
 
-	onDrag(id: ID, e: Object, data: Object) {
+	onDrag(id: ID, e: Event, data: Object) {
 		if (data.y > this.props.dragOutDistance || data.y < -this.props.dragOutDistance) {
 			const index = this.findTabIndexById(id)
 
@@ -266,7 +266,7 @@ export default class TabHeader extends Component {
 		}
 	}
 
-	onDragStop(e: Object, data: Object) {
+	onDragStop(e: Event, data: Object) {
 		if (this.virtualTabs) {
 			const idOrder = this.virtualTabs.getTabIds()
 			const newTabs = []
