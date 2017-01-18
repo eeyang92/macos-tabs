@@ -11,31 +11,31 @@ type Tabs = Array<TabBody>
 
 type Props = {
 	// onClick event when the user clicks on the AddTabButton on a tab header
-	onAddTabButtonClick?: (e: Event) => void,
+	onAddTabButtonClick: (e: Event) => void,
 
 	// onClick event when the user clicks on the CloseTabButton on a tab header
-	onCloseTabButtonClick?: (e: Event, index: number) => void,
+	onCloseTabButtonClick: (e: Event, index: number) => void,
 
 	// Event when the user stops dragging a header
 	// The updated tabs contain the new ordering, you can directly update your state with
 	// these returned tabs
 	// The updated index of the active tab is also provided
-	onDragStop?: (e: Event, index: number, tabs: Tabs) => void,
+	onDragStop: (e: Event, index: number, tabs: Tabs) => void,
 
 	// Event when the user clicks on a tab header
 	// The index of the clicked header is passed back
-	onTabClick?: (e: Event, index: number) => void,
+	onTabClick: (e: Event, index: number) => void,
 
 	// Event when the user's mouse enters a tab header
-	onTabMouseEnter?: (e: Event, index: number) => void,
+	onTabMouseEnter: (e: Event, index: number) => void,
 
 	// Even when the user's mouse leaves a tab header
-	onTabMouseLeave?: (e: Event, index: number) => void,
+	onTabMouseLeave: (e: Event, index: number) => void,
 
 	// Event when the activeTabIndex is updated internally
 	// This allows you to keep track of the activeTabIndex even
 	// if you are letting MacOSTabs handle the state
-	onSetActiveTab?: (index: number) => void,
+	onSetActiveTab: (index: number) => void,
 
 	// Specify the position of addTabButton
 	addTabPosition: 'none' | 'start' | 'end',
@@ -66,16 +66,16 @@ type Props = {
 	// Declare a custom element that the body should be rendered into
 	// instead of directly below the tab headers
 	// i.e. <div id="tabBody" />
-	customBodyElementId?: string,
+	customBodyElementId: string,
 
 	// Set tab scroll behavior
-	scrollX?: 'normal' | 'reversed' | 'disabled',
+	scrollX: 'normal' | 'reversed' | 'disabled',
 
 	// Set tab scroll behavior
-	scrollY?: 'normal' | 'reversed' | 'disabled',
+	scrollY: 'normal' | 'reversed' | 'disabled',
 
 	// Experimental/Not Completed
-	onDragOut?: (e: Event, outTabIndex: number) => void,
+	onDragOut: (e: Event, outTabIndex: number) => void,
 	dragOutDistance: number
 }
 
@@ -92,6 +92,7 @@ export default class MacOSTabs extends Component {
 
 	static defaultProps = {
 		tabs: [],
+		activeTabIndex: 0,
 		scrollX: 'normal',
 		scrollY: 'disabled',
 		addTabPosition: 'end',
@@ -215,11 +216,15 @@ export default class MacOSTabs extends Component {
 		for (let i = 0; i < this.props.tabs.length; i++) {
 			const tab = this.props.tabs[i]
 
-			if (i === this.getActiveTabIndex()) {
-				toRender.push(<TabBody display tabId={ tab.props.tabId } key={ tab.props.tabId }>{ tab.props.children }</TabBody>)
-			} else {
-				toRender.push(<TabBody tabId={ tab.props.tabId } key={ tab.props.tabId }>{ tab.props.children }</TabBody>)
+			const shouldDisplay = {
+				display: i === this.getActiveTabIndex()
 			}
+
+			toRender.push(
+				<TabBody { ...shouldDisplay } tabId={ tab.props.tabId } key={ tab.props.tabId }>
+					{ tab.props.children }
+				</TabBody>
+			)
 		}
 
 		return toRender

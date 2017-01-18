@@ -2,8 +2,8 @@
 import React, { Component } from 'react'
 
 type Props = {
-	// Label that will be diplayed on the tab header
-	label?: string | number,
+	// Label that will be displayed on the tab header
+	label: string | number,
 
 	// Children components to render
 	children?: HTMLElement | Component<*, *, *>,
