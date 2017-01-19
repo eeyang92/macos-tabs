@@ -74,6 +74,18 @@ type Props = {
 	// Set tab scroll behavior
 	scrollY: 'normal' | 'reversed' | 'disabled',
 
+	// Styles
+
+	// Apply custom styles to specified component(s)
+	styles: {
+		addTabButton: Object
+	},
+
+	// Apply custome classnames to specified component(s)
+	classNames: {
+		addTabButton: 'string'
+	},
+
 	// Experimental/Not Completed
 	onDragOut: (e: Event, outTabIndex: number) => void,
 	dragOutDistance: number
@@ -99,7 +111,9 @@ export default class MacOSTabs extends Component {
 		showHeader: true,
 		headerHeight: 24,
 		dragOutDistance: 40,
-		autoActiveTab: true
+		autoActiveTab: true,
+		styles: {},
+		classNames: {}
 	}
 
 	constructor(props: Props) {
@@ -273,6 +287,8 @@ export default class MacOSTabs extends Component {
 							scrollX={ this.props.scrollX }
 							scrollY={ this.props.scrollY }
 							tabs={ this.props.tabs }
+							styles={ this.props.styles }
+							classNames={ this.props.classNames }
 						/>
 					</div>
 				}

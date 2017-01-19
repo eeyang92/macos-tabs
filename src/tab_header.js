@@ -10,7 +10,7 @@ import AddTabButton from './add_tab_button'
 
 import VirtualTabs from './virtual_tabs'
 
-import styles from '../styles/tab_header.css'
+import style from '../styles/tab_header.css'
 
 type ID = number | string
 type Tabs = Array<Object>
@@ -29,7 +29,9 @@ type Props = {
 	scrollY?: 'normal' | 'reversed' | 'disabled',
 	activeTabIndex: number,
 	dragOutDistance: number,
-	tabs: Tabs
+	tabs: Tabs,
+	styles: Object,
+	classNames: Object
 }
 
 type State = {
@@ -56,7 +58,9 @@ export default class TabHeader extends Component {
 		addTabPosition: 'end',
 		activeTabIndex: 0,
 		tabs: [],
-		dragOutDistance: 40
+		dragOutDistance: 40,
+		styles: {},
+		classNames: {}
 	}
 
 	constructor(props: Props) {
@@ -303,23 +307,26 @@ export default class TabHeader extends Component {
 
 	render() {
 		const tabs = this.renderTabs(this.props.tabs)
-		const outerTabStyle = classnames('outerTabSelector', styles.macOSTabs)
-		const innerTabStyle = classnames('innerTabScrollSelector', styles.macOSTabs, styles.macOSTabsInner)
+		const outerTabStyle = classnames('outerTabSelector', style.macOSTabs)
+		const innerTabStyle = classnames('innerTabScrollSelector', style.macOSTabs, style.macOSTabsInner)
+		const addTabButton = (
+			<AddTabButton
+				onClick={ this.onAddTabButtonClick.bind(this) }
+				style={ this.props.styles.addTabButton }
+				className={ this.props.classNames.addTabButton }
+			/>
+		)
 
 		return (
 			<ul className={ outerTabStyle }>
-				{ this.props.addTabPosition === 'start' &&
-					<AddTabButton onClick={ this.onAddTabButtonClick.bind(this) } />
-				}
+				{ this.props.addTabPosition === 'start' && addTabButton }
 				<ul
 					className={ innerTabStyle }
 					ref={ (input) => this.onTabBarRef(input) }
 				>
 					{ tabs }
 				</ul>
-				{ this.props.addTabPosition === 'end' &&
-					<AddTabButton onClick={ this.onAddTabButtonClick.bind(this) } />
-				}
+				{ this.props.addTabPosition === 'end' && addTabButton }
 			</ul>
 		)
 	}

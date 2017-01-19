@@ -1,10 +1,13 @@
 // @flow
 import React, { Component } from 'react'
+import classnames from 'classnames'
 
-import styles from '../styles/add_tab_button.css'
+import style_ from '../styles/add_tab_button.css'
 
 type Props = {
-	onClick: (e: Event) => void
+	onClick: (e: Event) => void,
+	style?: Object,
+	className?: string
 }
 
 export default class AddTabButton extends Component {
@@ -17,8 +20,14 @@ export default class AddTabButton extends Component {
 	}
 
 	render() {
+		const className = classnames(style_.macOSAddTabButton, this.props.className)
+
 		return (
-			<li className={ styles.macOSAddTabButton } onClick={ this.onClick.bind(this) }>
+			<li
+				className={ className }
+				style={ this.props.style }
+				onClick={ this.onClick.bind(this) }
+			>
 				+
 			</li>
 		)
