@@ -24,12 +24,7 @@ describe('<CloseTabButton />', () => {
 		expect(wrapper).to.have.prop('onMouseDown')
 	})
 
-	it('should have child "div" element with an "x"', () => {
-		expect(wrapper.childAt(0)).to.have.text('x')
-	})
-
-	it('should have child "div" element with offset styles', () => {
-		expect(wrapper.childAt(0)).to.have.style('margin-top')
-		expect(wrapper.childAt(0)).to.have.style('margin-left')
+	it('should have child "div" element with an "×"', () => {
+		expect(wrapper.childAt(0)).to.have.text('×')
 	})
 })
