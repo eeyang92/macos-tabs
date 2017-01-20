@@ -5,11 +5,18 @@ import classnames from 'classnames'
 import styles from '../styles/tab.css'
 
 type Props = {
-	onClick: (e: Event) => void
+	onClick: (e: Event) => void,
+	style: Object,
+	className?: string,
+	icon?: Object | string
 }
 
 export default class CloseTabButton extends Component {
 	props: Props
+
+	static defaultProps = {
+		style: {}
+	}
 
 	onClick(e: Event) {
 		if (this.props.onClick) {
@@ -24,19 +31,16 @@ export default class CloseTabButton extends Component {
 	}
 
 	render() {
-		const closeTabButtonClassName = classnames('closeTabButton', styles.macOSCloseTabButton)
+		const className = classnames('closeTabButton', styles.macOSCloseTabButton, this.props.className)
 
 		return (
 			<div
-				className={ closeTabButtonClassName }
+				className={ className }
 				onClick={ this.onClick.bind(this) }
 				onMouseDown={ this.onMouseDown.bind(this) }
+				style={ this.props.style }
 			>
-				<div
-					style={{ marginTop: '-5px', marginLeft: '-1px' }}
-				>
-					x
-				</div>
+				{ (this.props.icon) ? this.props.icon : '×' }
 			</div>
 		)
 	}

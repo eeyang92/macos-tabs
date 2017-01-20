@@ -78,12 +78,14 @@ type Props = {
 
 	// Apply custom styles to specified component(s)
 	styles: {
-		addTabButton: Object
+		addTabButton: Object,
+		closeTabButton: Object
 	},
 
 	// Apply custome classnames to specified component(s)
 	classNames: {
-		addTabButton: 'string'
+		addTabButton: string,
+		closeTabButton: string
 	},
 
 	// Experimental/Not Completed

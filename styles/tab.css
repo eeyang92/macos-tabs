@@ -50,8 +50,12 @@
 	left: 5px;
 	color: #666366;
 	opacity: 0;
-	font-size: 14px;
-	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	font-size: 20px;
+	/*font-family: -apple-system, BlinkMacSystemFont, sans-serif;*/
+	text-align: center;
+	vertical-align: middle;
+	line-height: 14px;
+	font-weight: 200;
 }
 
 .macOSCloseTabButton:hover {

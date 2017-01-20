@@ -30,8 +30,14 @@ type Props = {
 	activeTabIndex: number,
 	dragOutDistance: number,
 	tabs: Tabs,
-	styles: Object,
-	classNames: Object
+	styles: {
+		addTabButton?: Object,
+		closeTabButton?: Object
+	},
+	classNames: {
+		addTabButton?: string,
+		closeTabButton?: string
+	}
 }
 
 type State = {
@@ -105,6 +111,8 @@ export default class TabHeader extends Component {
 				onClick={ this.onTabClick.bind(this, id) }
 				onMouseDown={ this.onTabMouseDown.bind(this, id) }
 				active={ this.props.activeTabIndex === index}
+				styles={ this.props.styles }
+				classNames={ this.props.classNames }
 			/>
 		)
 	}

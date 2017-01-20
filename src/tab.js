@@ -26,7 +26,13 @@ type Props = {
 	onMouseLeave?: (e: Event) => void,
 	getRef?: (ref: Ref) => void,
 	label?: string,
-	active?: boolean
+	active?: boolean,
+	styles: {
+		closeTabButton?: Object
+	},
+	classNames: {
+		closeTabButton?: string
+	}
 }
 
 class Tab extends Component {
@@ -35,7 +41,9 @@ class Tab extends Component {
 	static defaultProps = {
 		closeTabButtonPosition: 'start',
 		label: '',
-		active: false
+		active: false,
+		styles: {},
+		classNames: {}
 	}
 
 	onDragStart(e: Event, data: Object) {
@@ -107,6 +115,13 @@ class Tab extends Component {
 	render() {
 		const id = this.props.id
 		const macOSTabClassName = classnames(styles.macOSTabNormal, (this.props.active) ? styles.macOSTabActive : '', styles.macOSTabDummy)
+		const closeTabButton = (
+			<CloseTabButton
+				onClick={ this.onCloseTabButtonClick.bind(this) }
+				className={ this.props.classNames.closeTabButton }
+				style={ this.props.styles.closeTabButton }
+			/>
+		)
 
 		return (
 			<Draggable
@@ -129,15 +144,11 @@ class Tab extends Component {
 					onMouseLeave={ this.onMouseLeave.bind(this) }
 					ref={ this.getRef.bind(this) }
 				>
-					{ this.props.closeTabButtonPosition === 'start' &&
-						<CloseTabButton onClick={ this.onCloseTabButtonClick.bind(this) } />
-					}
+					{ this.props.closeTabButtonPosition === 'start' && closeTabButton }
 					<div className={ styles.macOSTabLabel }>
 						{ this.props.label }
 					</div>
-					{ this.props.closeTabButtonPosition === 'end' &&
-						<CloseTabButton onClick={ this.onCloseTabButtonClick.bind(this) } />
-					}
+					{ this.props.closeTabButtonPosition === 'end' && closeTabButton }
 				</li>
 			</Draggable>
 		)
