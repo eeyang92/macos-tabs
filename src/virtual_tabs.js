@@ -6,7 +6,7 @@ type Tabs = Array<{
 	id: number,
 	offsetX: number
 }>
-type Refs = { [key: string | number]: HTMLElement }
+type Refs = Map<ID, HTMLElement>
 type Direction = null | 'left' | 'right'
 
 export default class VirtualTabs {
@@ -41,7 +41,7 @@ export default class VirtualTabs {
 	}
 
 	calculateSwitchNumbers() {
-		const width = this.refs[this.sourceId].getBoundingClientRect().width
+		const width = this.refs.get(this.sourceId).getBoundingClientRect().width
 
 		this.leftTrigger = width * (-0.5 + this.switchNumber)
 		this.rightTrigger = width * (0.5 + this.switchNumber)
@@ -80,7 +80,7 @@ export default class VirtualTabs {
 	swapTabs(sourceId: ID, targetId: ID, directionNum: number) {
 		const sourceIndex = this.getIndex(this.sourceId)
 		const targetIndex = this.getIndex(targetId)
-		const targetRef = this.refs[targetId]
+		const targetRef = this.refs.get(targetId)
 
 		if (targetIndex > -1 && targetIndex < this.tabs.length) {
 			this.tabs[targetIndex].offsetX -= targetRef.getBoundingClientRect().width * directionNum

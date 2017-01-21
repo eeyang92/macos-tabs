@@ -100,7 +100,7 @@ type Props = {
 		closeTabButton?: Object | string
 	},
 
-	// Experimental/Not Completed
+	// Experimental
 	onDragOut: (e: Event, outTabIndex: number) => void,
 	dragOutDistance: number
 }
@@ -165,15 +165,15 @@ export default class MacOSTabs extends Component {
 		this.setActiveTab(index)
 	}
 
-	onAddTabButtonClick(e: Event, tabs: Tabs) {
+	onAddTabButtonClick(e: Event) {
 		if (this.props.onAddTabButtonClick) {
 			this.props.onAddTabButtonClick(e)
 		}
 
-		this.setActiveTab(tabs.length) // Purposely set to last index + 1
+		this.setActiveTab(this.props.tabs.length) // Purposely set to last index + 1
 	}
 
-	onCloseTabButtonClick(e: Event, tabs: Tabs, closedTabIndex: number) {
+	onCloseTabButtonClick(e: Event, closedTabIndex: number) {
 		if (this.props.onCloseTabButtonClick) {
 			this.props.onCloseTabButtonClick(e, closedTabIndex)
 		}
@@ -185,13 +185,13 @@ export default class MacOSTabs extends Component {
 		}
 	}
 
-	onDragOut(e: Event, data: Object, tabs: Tabs, index: number) {
+	onDragOut(e: Event, index: number) {
 		if (this.props.onDragOut) {
 			this.props.onDragOut(e, index)
 		}
 	}
 
-	onDragStop(e: Event, data: Object, tabs: Tabs, activeTabIndex: number) {
+	onDragStop(e: Event, tabs: Tabs, activeTabIndex: number) {
 		if (this.props.onDragStop) {
 			this.props.onDragStop(e, activeTabIndex, tabs)
 		}

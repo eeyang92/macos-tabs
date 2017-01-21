@@ -14,13 +14,15 @@ import style from '../styles/tab_header.css'
 
 type ID = number | string
 type Tabs = Array<Object>
+type Ref = null | HTMLElement
+type Refs = Map<ID, HTMLElement>
 
 type Props = {
 	onSetActiveTab?: (index: number) => void,
-	onAddTabButtonClick?: (e: Event, tabs: Tabs) => void,
-	onCloseTabButtonClick?: (e: Event, tabs: Tabs, closedTabIndex: number) => void,
-	onDragStop?: (e: Event, data: Object, tabs: Tabs, nextActiveTabIndex: number) => void,
-	onDragOut?: (e: Event, data: Object, tabs: Tabs, index: number) => void,
+	onAddTabButtonClick?: (e: Event) => void,
+	onCloseTabButtonClick?: (e: Event, index: number) => void,
+	onDragStop?: (e: Event, tabs: Tabs, index: number) => void,
+	onDragOut?: (e: Event, index: number) => void,
 	onTabClick?: (e: Event, index: number) => void,
 	onMouseEnter?: (e: Event, index: number) => void,
 	onMouseLeave?: (e: Event, index: number) => void,
@@ -56,9 +58,6 @@ type State = {
 	tabs: Tabs
 }
 
-type Ref = null | HTMLElement
-type Refs = { [key: ID | string ]: HTMLElement }
-
 export default class TabHeader extends Component {
 	props: Props
 	state: State
@@ -87,7 +86,7 @@ export default class TabHeader extends Component {
 
 		this.id = 0
 		this.tabBarRef = null
-		this.tabRefs = {}
+		this.tabRefs = new Map()
 		this.virtualTabs = null
 
 		this.onScroll = throttle(this.onScroll, 4, { leading: true }).bind(this)
@@ -142,17 +141,15 @@ export default class TabHeader extends Component {
 	}
 
 	onAddTabButtonClick(e: Event) {
-		const currentTabs = this.props.tabs.slice(0)
-
 		if (this.props.onAddTabButtonClick) {
-			this.props.onAddTabButtonClick(e, currentTabs)
+			this.props.onAddTabButtonClick(e)
 		}
 	}
 
 	focusTab(index: number, ms: number) {
 		const id = this.props.tabs[index].props.tabId
 
-		const $tab = $(this.tabRefs[id])
+		const $tab = $(this.tabRefs.get(id))
 		const position = $tab.position().left
 		const width = $tab.width()
 
@@ -180,10 +177,8 @@ export default class TabHeader extends Component {
 		const closedTabIndex = this.findTabIndexById(id)
 
 		if (closedTabIndex > -1) {
-			const currentTabs = this.props.tabs.slice(0)
-
 			if (this.props.onCloseTabButtonClick) {
-				this.props.onCloseTabButtonClick(e, currentTabs, closedTabIndex)
+				this.props.onCloseTabButtonClick(e, closedTabIndex)
 			}
 		}
 	}
@@ -264,15 +259,15 @@ export default class TabHeader extends Component {
 
 	onGetRef(id: ID, ref: Ref) {
 		if (ref) {
-			this.tabRefs[id] = ref
-		} else if (this.tabRefs[id]) {
-			delete this.tabRefs[id]
+			this.tabRefs.set(id, ref)
+		} else if (this.tabRefs.has(id)) {
+			this.tabRefs.delete(id)
 		}
 	}
 
-	onDragOut(e: Event, data: Object, tabs: Tabs, index: number) {
+	onDragOut(e: Event, data: Object, index: number) {
 		if (this.props.onDragOut) {
-			this.props.onDragOut(e, data, tabs, index)
+			this.props.onDragOut(e, index)
 		}
 	}
 
@@ -284,7 +279,7 @@ export default class TabHeader extends Component {
 		if (data.y > this.props.dragOutDistance || data.y < -this.props.dragOutDistance) {
 			const index = this.findTabIndexById(id)
 
-			this.onDragOut(e, data, this.props.tabs.slice(0), index)
+			this.onDragOut(e, data, index)
 		}
 
 		if (this.virtualTabs) {
@@ -307,7 +302,7 @@ export default class TabHeader extends Component {
 			const nextActiveTabIndex = newTabs.findIndex((tab) => tab.props.tabId === currentActiveTabId)
 
 			if (this.props.onDragStop) {
-				this.props.onDragStop(e, data, newTabs, nextActiveTabIndex)
+				this.props.onDragStop(e, newTabs, nextActiveTabIndex)
 			}
 
 			this.virtualTabs = null
@@ -315,14 +310,21 @@ export default class TabHeader extends Component {
 	}
 
 	resetTabPositions() {
-		for (const key in this.tabRefs) {
-			const $ref = $(this.tabRefs[key])
+		for (const key of this.tabRefs.keys()) {
+			// const index = this.findTabIndexById(key)
+			const $ref = $(this.tabRefs.get(key))
 
 			if ($ref.css('transition') !== 'transform 0.0s linear' || $ref.css('transform') !== 'translate(0px, 0px)') {
+				// if (index === this.props.activeTabIndex) {
+				// 	$ref.css({
+				// 		transform: 'translate(0px, 0px)'
+				// 	})
+				// } else {
 				$ref.css({
 					transition: 'transform 0.0s linear',
 					transform: 'translate(0px, 0px)'
 				})
+				// }
 			}
 		}
 	}

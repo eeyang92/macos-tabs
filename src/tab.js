@@ -42,8 +42,13 @@ type Props = {
 	}
 }
 
+// type State = {
+// 	x: number
+// }
+
 class Tab extends Component {
 	props: Props
+	// state: State
 
 	static defaultProps = {
 		closeTabButtonPosition: 'start',
@@ -53,6 +58,14 @@ class Tab extends Component {
 		classNames: {},
 		icons: {}
 	}
+
+	// constructor(props: Props) {
+	// 	super(props)
+
+	// 	this.state = {
+	// 		x: 0
+	// 	}
+	// }
 
 	onDragStart(e: Event, data: Object) {
 		if (this.props.onDragStart) {
