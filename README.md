@@ -92,6 +92,32 @@ type Props = {
 	// Set tab scroll behavior
 	scrollY: 'normal' | 'reversed' | 'disabled',
 
+	// Apply custom styles to specified component(s)
+	styles: {
+		addTabButton?: Object,
+		closeTabButton?: Object,
+		tab?: Object,
+		tabActive?: Object,
+		outerTabContainer?: Object,
+		innerTabContainer?: Object
+	},
+
+	// Apply custom classnames to specified component(s)
+	classNames: {
+		addTabButton?: string,
+		closeTabButton?: string,
+		tab?: string,
+		tabActive?: string,
+		outerTabContainer?: string,
+		innerTabContainer?: string
+	},
+
+	// Override icons on buttons
+	icons: {
+		addTabButton?: Object | string,
+		closeTabButton?: Object | string
+	},
+
 	// Experimental/Not Completed
 	onDragOut: (e: Event, outTabIndex: number) => void,
 	dragOutDistance: number
@@ -99,13 +125,17 @@ type Props = {
 
 static defaultProps = {
 	tabs: [],
+	activeTabIndex: 0,
 	scrollX: 'normal',
 	scrollY: 'disabled',
 	addTabPosition: 'end',
 	showHeader: true,
 	headerHeight: 24,
 	dragOutDistance: 40,
-	autoActiveTab: true
+	autoActiveTab: true,
+	styles: {},
+	classNames: {},
+	icons: {}
 }
 ```
 
@@ -120,7 +150,16 @@ type Props = {
 	children?: HTMLElement | Component<*, *, *>,
 
 	// Unique tabId
-	tabId: string | number
+	tabId: string | number,
+
+	// Optional styles/classnames
+
+	// Set additional TabBody styles
+	// Note: In most cases, setting styles on the child component is sufficient
+	style?: Object,
+
+	// Set TabBody classname
+	className?: string
 }
 
 static defaultProps = {

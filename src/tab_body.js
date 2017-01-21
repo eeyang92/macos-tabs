@@ -9,7 +9,16 @@ type Props = {
 	children?: HTMLElement | Component<*, *, *>,
 
 	// Unique tabId
-	tabId: string | number
+	tabId: string | number,
+
+	// Optional styles/classnames
+
+	// Set additional TabBody styles
+	// Note: In most cases, setting styles on the child component is sufficient
+	style?: Object,
+
+	// Set TabBody classname
+	className?: string
 }
 
 type PrivateProps = Props & {
@@ -27,7 +36,11 @@ export default class TabBody extends Component {
 		const display = (this.props.display) ? 'block' : 'none'
 
 		return (
-			<div id={ `macos-tab-body-${ this.props.tabId }` } style={{ height: '100%', display }}>
+			<div
+				id={ `macos-tab-body-${ this.props.tabId }` }
+				className={ this.props.className }
+				style={{ height: '100%', display, ...this.props.style }}
+			>
 				{ this.props.children }
 			</div>
 		)

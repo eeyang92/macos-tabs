@@ -28,10 +28,17 @@ type Props = {
 	label?: string,
 	active?: boolean,
 	styles: {
-		closeTabButton?: Object
+		closeTabButton?: Object,
+		tab?: Object,
+		tabActive?: Object
 	},
 	classNames: {
-		closeTabButton?: string
+		closeTabButton?: string,
+		tab?: string,
+		tabActive?: string
+	},
+	icons: {
+		closeTabButton?: Object | string
 	}
 }
 
@@ -43,7 +50,8 @@ class Tab extends Component {
 		label: '',
 		active: false,
 		styles: {},
-		classNames: {}
+		classNames: {},
+		icons: {}
 	}
 
 	onDragStart(e: Event, data: Object) {
@@ -114,12 +122,23 @@ class Tab extends Component {
 
 	render() {
 		const id = this.props.id
-		const macOSTabClassName = classnames(styles.macOSTabNormal, (this.props.active) ? styles.macOSTabActive : '', styles.macOSTabDummy)
+		let macOSTabClassName
+		let macOSTabStyle
+
+		if (this.props.active) {
+			macOSTabClassName = classnames(styles.macOSTabNormal, styles.macOSTabActive, this.props.classNames.tabActive)
+			macOSTabStyle = this.props.styles.tabActive
+		} else {
+			macOSTabClassName = classnames(styles.macOSTabNormal, this.props.classNames.tab)
+			macOSTabStyle = this.props.styles.tab
+		}
+
 		const closeTabButton = (
 			<CloseTabButton
 				onClick={ this.onCloseTabButtonClick.bind(this) }
 				className={ this.props.classNames.closeTabButton }
 				style={ this.props.styles.closeTabButton }
+				icon={ this.props.icons.closeTabButton }
 			/>
 		)
 
@@ -129,7 +148,7 @@ class Tab extends Component {
 				axis='x'
 				cancel='.closeTabButton'
 				zIndex={ 50 }
-				bounds={ $('.outerTabSelector').get()[0] }
+				bounds={ $('.outerTabContainerSelector').get()[0] }
 				onStart={ this.onDragStart.bind(this) }
 				onDrag={ this.onDrag.bind(this) }
 				onStop={ this.onDragStop.bind(this) }
@@ -139,6 +158,7 @@ class Tab extends Component {
 			>
 				<li
 					className={ macOSTabClassName }
+					style={ macOSTabStyle }
 					onClick={ this.onClick.bind(this) }
 					onMouseEnter={ this.onMouseEnter.bind(this) }
 					onMouseLeave={ this.onMouseLeave.bind(this) }

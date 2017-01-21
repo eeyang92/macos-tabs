@@ -74,18 +74,30 @@ type Props = {
 	// Set tab scroll behavior
 	scrollY: 'normal' | 'reversed' | 'disabled',
 
-	// Styles
-
 	// Apply custom styles to specified component(s)
 	styles: {
-		addTabButton: Object,
-		closeTabButton: Object
+		addTabButton?: Object,
+		closeTabButton?: Object,
+		tab?: Object,
+		tabActive?: Object,
+		outerTabContainer?: Object,
+		innerTabContainer?: Object
 	},
 
-	// Apply custome classnames to specified component(s)
+	// Apply custom classnames to specified component(s)
 	classNames: {
-		addTabButton: string,
-		closeTabButton: string
+		addTabButton?: string,
+		closeTabButton?: string,
+		tab?: string,
+		tabActive?: string,
+		outerTabContainer?: string,
+		innerTabContainer?: string
+	},
+
+	// Override icons on buttons
+	icons: {
+		addTabButton?: Object | string,
+		closeTabButton?: Object | string
 	},
 
 	// Experimental/Not Completed
@@ -115,7 +127,8 @@ export default class MacOSTabs extends Component {
 		dragOutDistance: 40,
 		autoActiveTab: true,
 		styles: {},
-		classNames: {}
+		classNames: {},
+		icons: {}
 	}
 
 	constructor(props: Props) {
@@ -237,7 +250,11 @@ export default class MacOSTabs extends Component {
 			}
 
 			toRender.push(
-				<TabBody { ...shouldDisplay } tabId={ tab.props.tabId } key={ tab.props.tabId }>
+				<TabBody
+					{ ...shouldDisplay }
+					{ ...tab.props }
+					key={ tab.props.tabId }
+				>
 					{ tab.props.children }
 				</TabBody>
 			)
@@ -291,6 +308,7 @@ export default class MacOSTabs extends Component {
 							tabs={ this.props.tabs }
 							styles={ this.props.styles }
 							classNames={ this.props.classNames }
+							icons={ this.props.icons }
 						/>
 					</div>
 				}

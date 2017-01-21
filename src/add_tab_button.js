@@ -7,7 +7,8 @@ import style_ from '../styles/add_tab_button.css'
 type Props = {
 	onClick: (e: Event) => void,
 	style?: Object,
-	className?: string
+	className?: string,
+	icon?: Object | string
 }
 
 export default class AddTabButton extends Component {
@@ -28,7 +29,7 @@ export default class AddTabButton extends Component {
 				style={ this.props.style }
 				onClick={ this.onClick.bind(this) }
 			>
-				+
+				{ (this.props.icon) ? this.props.icon : '+' }
 			</li>
 		)
 	}

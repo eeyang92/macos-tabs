@@ -32,11 +32,23 @@ type Props = {
 	tabs: Tabs,
 	styles: {
 		addTabButton?: Object,
-		closeTabButton?: Object
+		closeTabButton?: Object,
+		tab?: Object,
+		tabActive?: Object,
+		outerTabContainer?: Object,
+		innerTabContainer?: Object
 	},
 	classNames: {
 		addTabButton?: string,
-		closeTabButton?: string
+		closeTabButton?: string,
+		tab?: string,
+		tabActive?: string,
+		outerTabContainer?: string,
+		innerTabContainer?: string
+	},
+	icons: {
+		addTabButton?: Object | string,
+		closeTabButton?: Object | string
 	}
 }
 
@@ -66,7 +78,8 @@ export default class TabHeader extends Component {
 		tabs: [],
 		dragOutDistance: 40,
 		styles: {},
-		classNames: {}
+		classNames: {},
+		icons: {}
 	}
 
 	constructor(props: Props) {
@@ -113,6 +126,7 @@ export default class TabHeader extends Component {
 				active={ this.props.activeTabIndex === index}
 				styles={ this.props.styles }
 				classNames={ this.props.classNames }
+				icons={ this.props.icons }
 			/>
 		)
 	}
@@ -315,21 +329,23 @@ export default class TabHeader extends Component {
 
 	render() {
 		const tabs = this.renderTabs(this.props.tabs)
-		const outerTabStyle = classnames('outerTabSelector', style.macOSTabs)
-		const innerTabStyle = classnames('innerTabScrollSelector', style.macOSTabs, style.macOSTabsInner)
+		const outerTabClassName = classnames('outerTabContainerSelector', style.macOSTabs, this.props.classNames.outerTabContainer)
+		const innerTabClassName = classnames('innerTabScrollSelector', style.macOSTabs, style.macOSTabsInner, this.props.classNames.innerTabContainer)
 		const addTabButton = (
 			<AddTabButton
 				onClick={ this.onAddTabButtonClick.bind(this) }
 				style={ this.props.styles.addTabButton }
 				className={ this.props.classNames.addTabButton }
+				icon={ this.props.icons.addTabButton }
 			/>
 		)
 
 		return (
-			<ul className={ outerTabStyle }>
+			<ul className={ outerTabClassName } style={ this.props.styles.outerTabContainer }>
 				{ this.props.addTabPosition === 'start' && addTabButton }
 				<ul
-					className={ innerTabStyle }
+					className={ innerTabClassName }
+					style={ this.props.styles.innerTabContainer }
 					ref={ (input) => this.onTabBarRef(input) }
 				>
 					{ tabs }

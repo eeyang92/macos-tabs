@@ -6,17 +6,13 @@ import styles from '../styles/tab.css'
 
 type Props = {
 	onClick: (e: Event) => void,
-	style: Object,
+	style?: Object,
 	className?: string,
 	icon?: Object | string
 }
 
 export default class CloseTabButton extends Component {
 	props: Props
-
-	static defaultProps = {
-		style: {}
-	}
 
 	onClick(e: Event) {
 		if (this.props.onClick) {
