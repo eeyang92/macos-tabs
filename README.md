@@ -2,6 +2,8 @@
 
 [![npm version](https://badge.fury.io/js/macos-tabs.svg)](https://www.npmjs.com/package/macos-tabs)
 
+![MacOS Tabs](https://github.com/eeyang92/macos-tabs/blob/master/macos_tabs.png)
+
 ## Installation
 
 ```sh
