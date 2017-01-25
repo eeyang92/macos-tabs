@@ -2,12 +2,6 @@
 
 [![npm version](https://badge.fury.io/js/macos-tabs.svg)](https://www.npmjs.com/package/macos-tabs)
 
-## Note
-
-This package is a work in progress. More examples and configuration options will be put up as soon as possible!
-
-Also note, since 1.3.0 the order of arguments in onDragStop has been changed to bring it in line with the other props
-
 ## Installation
 
 ```sh

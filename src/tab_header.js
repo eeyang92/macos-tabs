@@ -54,13 +54,8 @@ type Props = {
 	}
 }
 
-type State = {
-	tabs: Tabs
-}
-
 export default class TabHeader extends Component {
 	props: Props
-	state: State
 
 	id: ID
 	tabBarRef: Ref
